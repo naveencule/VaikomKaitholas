@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Band Preloader</title>
+    <style>
+        /* Advanced Music Band Preloader */
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: 
+                radial-gradient(circle at 20% 30%, #ff006e 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, #8338ec 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, #3a86ff 0%, transparent 50%),
+                linear-gradient(135deg, #0a0a0a 0%, #1a0a1a 50%, #0a0a0a 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            overflow: hidden;
+            animation: background-pulse 1.2s ease-in-out infinite alternate;
+        }
+
+        @keyframes background-pulse {
+            0% { filter: brightness(1) contrast(1); }
+            100% { filter: brightness(1.1) contrast(1.2); }
+        }
+
+        /* Main container for all elements */
+        .preloader-container {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Neon equalizer bars */
+        .neon-equalizer {
+            position: absolute;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            gap: 6px;
+            height: 150px;
+            opacity: 0;
+            animation: equalizer-appear 0.3s ease-out 0.2s forwards;
+        }
+
+        .neon-bar {
+            width: 8px;
+            border-radius: 4px;
+            background: linear-gradient(to top, 
+                #ff006e 0%, 
+                #ff4081 30%, 
+                #8338ec 60%, 
+                #3a86ff 100%);
+            box-shadow: 
+                0 0 10px currentColor,
+                0 0 20px currentColor,
+                0 0 30px currentColor,
+                inset 0 0 10px rgba(255, 255, 255, 0.2);
+            animation: neon-pulse 0.8s ease-in-out infinite;
+            transform-origin: bottom;
+        }
+
+        .neon-bar:nth-child(1) { height: 20px; animation-delay: 0s; color: #ff006e; }
+        .neon-bar:nth-child(2) { height: 45px; animation-delay: 0.1s; color: #ff4081; }
+        .neon-bar:nth-child(3) { height: 70px; animation-delay: 0.2s; color: #8338ec; }
+        .neon-bar:nth-child(4) { height: 95px; animation-delay: 0.3s; color: #3a86ff; }
+        .neon-bar:nth-child(5) { height: 120px; animation-delay: 0.4s; color: #06ffa5; }
+        .neon-bar:nth-child(6) { height: 95px; animation-delay: 0.5s; color: #3a86ff; }
+        .neon-bar:nth-child(7) { height: 70px; animation-delay: 0.6s; color: #8338ec; }
+        .neon-bar:nth-child(8) { height: 45px; animation-delay: 0.7s; color: #ff4081; }
+        .neon-bar:nth-child(9) { height: 20px; animation-delay: 0.8s; color: #ff006e; }
+
+        @keyframes equalizer-appear {
+            0% { opacity: 0; transform: translateY(50px) scale(0.5); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        @keyframes neon-pulse {
+            0%, 100% { 
+                transform: scaleY(0.3) scaleX(1);
+                filter: brightness(0.8);
+            }
+            50% { 
+                transform: scaleY(1.2) scaleX(1.1);
+                filter: brightness(1.5);
+            }
+        }
+
+        /* Rotating vinyl with holographic effect */
+        .holographic-vinyl {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: 
+                conic-gradient(from 0deg, 
+                    #ff006e 0deg, 
+                    #8338ec 72deg, 
+                    #3a86ff 144deg, 
+                    #06ffa5 216deg, 
+                    #ffbe0b 288deg, 
+                    #ff006e 360deg),
+                radial-gradient(circle at center, 
+                    rgba(0,0,0,0.8) 15%, 
+                    transparent 16%, 
+                    transparent 84%, 
+                    rgba(0,0,0,0.8) 85%);
+            opacity: 0;
+            animation: 
+                vinyl-holographic 1.5s linear infinite,
+                vinyl-entrance 0.4s ease-out 0.1s forwards;
+            filter: blur(0.5px) brightness(1.2);
+            box-shadow: 
+                0 0 30px rgba(255, 0, 110, 0.3),
+                0 0 60px rgba(131, 56, 236, 0.2),
+                inset 0 0 20px rgba(255, 255, 255, 0.1);
+        }
+
+        .holographic-vinyl::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: radial-gradient(circle, #000 0%, #333 100%);
+            box-shadow: 
+                0 0 10px rgba(255, 255, 255, 0.5),
+                inset 0 0 5px rgba(255, 255, 255, 0.2);
+        }
+
+        @keyframes vinyl-holographic {
+            0% { transform: rotate(0deg) scale(1); }
+            25% { transform: rotate(90deg) scale(1.05); }
+            50% { transform: rotate(180deg) scale(1); }
+            75% { transform: rotate(270deg) scale(1.05); }
+            100% { transform: rotate(360deg) scale(1); }
+        }
+
+        @keyframes vinyl-entrance {
+            0% { 
+                opacity: 0; 
+                transform: scale(0) rotate(0deg); 
+            }
+            100% { 
+                opacity: 0.9; 
+                transform: scale(1) rotate(360deg); 
+            }
+        }
+
+        /* Energy waves */
+        .energy-wave {
+            position: absolute;
+            border-radius: 50%;
+            border: 2px solid;
+            opacity: 0;
+            animation: energy-pulse 1s ease-out infinite;
+        }
+
+        .energy-wave:nth-child(1) {
+            width: 100px;
+            height: 100px;
+            border-color: #ff006e;
+            animation-delay: 0s;
+        }
+
+        .energy-wave:nth-child(2) {
+            width: 150px;
+            height: 150px;
+            border-color: #8338ec;
+            animation-delay: 0.3s;
+        }
+
+        .energy-wave:nth-child(3) {
+            width: 200px;
+            height: 200px;
+            border-color: #3a86ff;
+            animation-delay: 0.6s;
+        }
+
+        @keyframes energy-pulse {
+            0% { 
+                opacity: 0; 
+                transform: scale(0.5);
+                filter: blur(5px);
+            }
+            50% { 
+                opacity: 0.8;
+                filter: blur(0px);
+            }
+            100% { 
+                opacity: 0; 
+                transform: scale(1.5);
+                filter: blur(3px);
+            }
+        }
+
+        /* Floating musical particles */
+        .particle-system {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .music-particle {
+            position: absolute;
+            font-size: 20px;
+            opacity: 0;
+            animation: particle-float 1.5s ease-out infinite;
+            filter: drop-shadow(0 0 5px currentColor);
+        }
+
+        .music-particle:nth-child(1) {
+            top: 20%;
+            left: 15%;
+            color: #ff006e;
+            animation-delay: 0.2s;
+        }
+
+        .music-particle:nth-child(2) {
+            top: 80%;
+            left: 85%;
+            color: #8338ec;
+            animation-delay: 0.4s;
+        }
+
+        .music-particle:nth-child(3) {
+            top: 25%;
+            left: 80%;
+            color: #3a86ff;
+            animation-delay: 0.6s;
+        }
+
+        .music-particle:nth-child(4) {
+            top: 75%;
+            left: 20%;
+            color: #06ffa5;
+            animation-delay: 0.8s;
+        }
+
+        @keyframes particle-float {
+            0% { 
+                opacity: 0; 
+                transform: translateY(0) scale(0.5) rotate(0deg); 
+            }
+            30% { 
+                opacity: 1; 
+                transform: translateY(-20px) scale(1.2) rotate(180deg); 
+            }
+            100% { 
+                opacity: 0; 
+                transform: translateY(-40px) scale(0.8) rotate(360deg); 
+            }
+        }
+
+        /* Central logo with glow effect */
+        .logo-glow {
+            position: absolute;
+            z-index: 1000;
+            opacity: 0;
+            animation: logo-glow-in 0.5s ease-out 0.4s forwards;
+        }
+
+        .logo-glow img {
+            width: 80px;
+            height: auto;
+            filter: 
+                drop-shadow(0 0 10px #ff006e)
+                drop-shadow(0 0 20px #8338ec)
+                drop-shadow(0 0 30px #3a86ff);
+            animation: logo-pulse 1s ease-in-out infinite alternate;
+        }
+
+        @keyframes logo-glow-in {
+            0% { 
+                opacity: 0; 
+                transform: scale(0) rotate(-180deg); 
+            }
+            100% { 
+                opacity: 1; 
+                transform: scale(1) rotate(0deg); 
+            }
+        }
+
+        @keyframes logo-pulse {
+            0% { 
+                transform: scale(1);
+                filter: 
+                    drop-shadow(0 0 10px #ff006e)
+                    drop-shadow(0 0 20px #8338ec)
+                    drop-shadow(0 0 30px #3a86ff);
+            }
+            100% { 
+                transform: scale(1.1);
+                filter: 
+                    drop-shadow(0 0 15px #ff006e)
+                    drop-shadow(0 0 25px #8338ec)
+                    drop-shadow(0 0 35px #3a86ff)
+                    drop-shadow(0 0 45px rgba(255, 255, 255, 0.3));
+            }
+        }
+
+        /* Smooth fade out */
+        #preloader.fade-out {
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease-out;
+        }
+
+        /* Beat pulse overlay */
+        .beat-pulse {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, transparent 60%, rgba(255, 0, 110, 0.1) 100%);
+            opacity: 0;
+            animation: beat-flash 0.6s ease-in-out infinite;
+        }
+
+        @keyframes beat-flash {
+            0%, 100% { opacity: 0; }
+            50% { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div id="preloader">
+        <!-- Beat pulse overlay -->
+        <div class="beat-pulse"></div>
+        
+        <!-- Main container -->
+        <div class="preloader-container">
+            <!-- Energy waves -->
+            <div class="energy-wave"></div>
+            <div class="energy-wave"></div>
+            <div class="energy-wave"></div>
+            
+            <!-- Holographic vinyl -->
+            <div class="holographic-vinyl"></div>
+            
+            <!-- Neon equalizer -->
+            <div class="neon-equalizer">
+                <div class="neon-bar"></div>
+                <div class="neon-bar"></div>
+                <div class="neon-bar"></div>
+                <div class="neon-bar"></div>
+                <div class="neon-bar"></div>
+                <div class="neon-bar"></div>
+                <div class="neon-bar"></div>
+                <div class="neon-bar"></div>
+                <div class="neon-bar"></div>
+            </div>
+            
+            <!-- Central logo -->
+            <div class="logo-glow">
+                <img src="/images/logo.png" alt="Logo" />
+            </div>
+        </div>
+        
+        <!-- Floating particles -->
+        <div class="particle-system">
+            <div class="music-particle">♪</div>
+            <div class="music-particle">♫</div>
+            <div class="music-particle">♪</div>
+            <div class="music-particle">♫</div>
+        </div>
+    </div>
+
+    <script>
+        window.addEventListener('load', () => {
+            const preloader = document.getElementById('preloader');
+            if (preloader) {
+                // Much shorter duration - 1.2 seconds total
+                setTimeout(() => {
+                    preloader.classList.add('fade-out');
+                    setTimeout(() => {
+                        preloader.style.display = 'none';
+                    }, 300); // faster fade-out
+                }, 1200); // 1.2 seconds total - much shorter!
+            }
+        });
+
+        // Optional: Add some audio reactive effect simulation
+        document.addEventListener('DOMContentLoaded', () => {
+            const bars = document.querySelectorAll('.neon-bar');
+            setInterval(() => {
+                bars.forEach(bar => {
+                    const randomHeight = Math.random() * 100 + 20;
+                    bar.style.height = randomHeight + 'px';
+                });
+            }, 150);
+        });
+    </script>
+</body>
+</html>
