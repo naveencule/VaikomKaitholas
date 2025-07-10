@@ -23,6 +23,9 @@
 
     <link href="css/templatemo-festava-live.css" rel="stylesheet">
 
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
+
     <!-- Cinzel -->
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&display=swap" rel="stylesheet">
 
@@ -30,16 +33,303 @@
 <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
 
 
-    <!--
-
-TemplateMo 583 Festava Live
-
-https://templatemo.com/tm-583-festava-live
-
--->
+  
 </head>
 
 <body>
+
+<!-- Preloader Starts........... -->
+
+    <style>
+        /* Full screen overlay */
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: linear-gradient(135deg, #000000 0%, #000000 50%, #000000 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* Animated background particles */
+        .particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: particle-float 3s linear infinite;
+        }
+
+        @keyframes particle-float {
+            0% {
+                transform: translateY(100vh) scale(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) scale(1);
+                opacity: 0;
+            }
+        }
+
+        /* Central loading circle */
+        .loading-circle {
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            border: 3px solid rgba(255, 255, 255, 0.1);
+            border-top: 3px solid #c0c706;
+            border-radius: 50%;
+            opacity: 0;
+            animation: circle-spin 1s linear infinite, circle-appear 0.5s ease-out forwards;
+            animation-delay: 0s, 0.2s;
+        }
+
+        @keyframes circle-spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes circle-appear {
+            0% { 
+                opacity: 0; 
+                transform: scale(0.5); 
+            }
+            100% { 
+                opacity: 1; 
+                transform: scale(1); 
+            }
+        }
+
+        /* Progress bar */
+        .progress-container {
+            position: absolute;
+            bottom: 30%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 300px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+            overflow: hidden;
+            opacity: 0;
+            animation: progress-appear 0.5s ease-out forwards;
+            animation-delay: 0.3s;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #c0c706, #c0c706, #c0c706);
+            border-radius: 2px;
+            width: 0%;
+            animation: progress-fill 1.5s ease-out forwards;
+            animation-delay: 0.5s;
+        }
+
+        @keyframes progress-appear {
+            0% { 
+                opacity: 0; 
+                transform: translateX(-50%) scale(0.8); 
+            }
+            100% { 
+                opacity: 1; 
+                transform: translateX(-50%) scale(1); 
+            }
+        }
+
+        @keyframes progress-fill {
+            0% { width: 0%; }
+            100% { width: 100%; }
+        }
+
+        /* Logo container - starts hidden, reveals at the end */
+        .logo-container {
+            position: relative;
+            z-index: 1000;
+            opacity: 0;
+            transform: scale(0.5);
+            animation: logo-reveal 0.6s ease-out forwards;
+            animation-delay: 1.4s; /* Reveals at 1.4s */
+        }
+
+        /* Logo styling - 300px final size */
+        .preloader-logo {
+            width: 250px;
+            height: auto;
+            
+            animation: logo-glow 0.8s ease-out forwards;
+            animation-delay: 1.6s;
+        }
+
+        /* Fallback logo placeholder */
+        .logo-placeholder {
+            width: 280px;
+            height: 120px;
+           
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Arial', sans-serif;
+            font-size: 32px;
+            font-weight: bold;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+          
+        }
+
+        @keyframes logo-reveal {
+            0% { 
+                opacity: 0; 
+                transform: scale(0.5) translateY(30px); 
+            }
+            100% { 
+                opacity: 1; 
+                transform: scale(1) translateY(0); 
+            }
+        }
+
+        
+
+        /* Smooth fade out */
+        #preloader.fade-out {
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease-out;
+        }
+
+        /* Subtle overlay for depth */
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+           
+            pointer-events: none;
+        }
+
+        /* Loading text */
+        .loading-text {
+            position: absolute;
+            bottom: 25%;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: 'Arial', sans-serif;
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.7);
+            opacity: 0;
+            animation: text-appear 0.5s ease-out forwards;
+            animation-delay: 0.6s;
+        }
+
+        @keyframes text-appear {
+            0% { 
+                opacity: 0; 
+                transform: translateX(-50%) translateY(20px); 
+            }
+            100% { 
+                opacity: 1; 
+                transform: translateX(-50%) translateY(0); 
+            }
+        }
+
+        /* Hide elements when logo appears */
+        #preloader.logo-phase .loading-circle,
+        #preloader.logo-phase .progress-container,
+        #preloader.logo-phase .loading-text {
+            opacity: 0;
+            transition: opacity 0.3s ease-out;
+        }
+    </style>
+
+    <div id="preloader">
+        <!-- Subtle overlay -->
+        <div class="overlay"></div>
+        
+        <!-- Animated background particles -->
+        <div class="particles"></div>
+        
+        <!-- Central loading circle -->
+        <div class="loading-circle"></div>
+        
+        <!-- Progress bar -->
+        <div class="progress-container">
+            <div class="progress-bar"></div>
+        </div>
+        
+        <!-- Loading text -->
+        <div class="loading-text">Loading...</div>
+        
+        <!-- Logo - appears at the end -->
+        <div class="logo-container">
+            <img src="/images/logo.png" alt="Logo" class="preloader-logo" 
+                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+            <div class="logo-placeholder" style="display: none;">LOGO</div>
+        </div>
+    </div>
+
+    <script>
+        // Create floating particles
+        function createParticles() {
+            const particles = document.querySelector('.particles');
+            const particleCount = 30;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 3 + 's';
+                particle.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                particles.appendChild(particle);
+            }
+        }
+
+        // Initialize particles
+        createParticles();
+
+        window.addEventListener('load', () => {
+            const preloader = document.getElementById('preloader');
+            if (preloader) {
+                // Switch to logo phase at 1.3s
+                setTimeout(() => {
+                    preloader.classList.add('logo-phase');
+                }, 1000);
+                
+                // Complete fade out at exactly 2 seconds
+                setTimeout(() => {
+                    preloader.classList.add('fade-out');
+                    setTimeout(() => {
+                        preloader.style.display = 'none';
+                    }, 400); // Fade-out duration
+                }, 2000); // Exactly 2 seconds total
+            }
+        });
+    </script>
+
+    
+
+<!--  preloader sectoion ends.................. -->
 
     <main>
 
@@ -47,21 +337,40 @@ https://templatemo.com/tm-583-festava-live
             <div class="container">
                 <div class="row">
 
-                    <div class="col-lg-12 col-12 d-flex flex-wrap">
-                        <p class="d-flex me-4 mb-0">
-                            <i class="bi-person custom-icon me-2"></i>
-                            <strong class="text-dark">Welcome To Our Website</strong>
-                        </p>
-                    </div>
+                    <div class="col-lg-12 col-12 d-flex flex-wrap slide-in-right">
+    <p class="d-flex me-4 mb-0">
+        <i class="bi-person custom-icon me-2"></i>
+        
+       <h4 class="text-dark">We Welcome You</h4>
+
+    </p>
+</div>
+        
 
                 </div>
             </div>
         </header>
+<style>
+    @keyframes slideInFromRight {
+    0% {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
 
+.slide-in-right {
+    animation: slideInFromRight 1s ease-out forwards;
+}
+
+</style>
 
         <nav class="navbar navbar-expand-lg">
             <div class="container">
-                <a class="navbar-brand" href="index.html">
+                <a class="navbar-brand" href="">
                     Vaikom Kaitholas
                 </a>
 
@@ -82,6 +391,11 @@ https://templatemo.com/tm-583-festava-live
                             <a class="nav-link click-scroll" href="#section_2">About</a>
                         </li>
 
+
+
+                        <li class="nav-item">
+                            <a class="nav-link click-scroll" href="#section_3">Videos</a>
+                        </li>
                        
 
                          <li class="nav-item">
@@ -89,8 +403,9 @@ https://templatemo.com/tm-583-festava-live
                         </li>
 
                          <li class="nav-item">
-                            <a class="nav-link click-scroll" href="#section_3">Videos</a>
+                            <a class="nav-link click-scroll" href="#section_6">Contact</a>
                         </li>
+                         
 
                        
 
@@ -98,9 +413,7 @@ https://templatemo.com/tm-583-festava-live
                             <a class="nav-link click-scroll" href="#section_5">Pricing</a>
                         </li> -->
 
-                        <li class="nav-item">
-                            <a class="nav-link click-scroll" href="#section_6">Contact</a>
-                        </li>
+                       
                     </ul>
 
                     <!-- <a href="ticket.html" class="btn custom-btn d-lg-block d-none">Buy Ticket</a> -->
@@ -115,126 +428,154 @@ https://templatemo.com/tm-583-festava-live
             <div class="container d-flex justify-content-center align-items-center">
                 <div class="row">
 
-                    <!-- <div class="col-12 mt-auto mb-5 text-center">
-                        <small>Vaikom Kaitholas Presents</small>
 
-                        <h1 class="text-white mb-5">ആമലവെട്ട്</h1>
+                    <!-- this is the changes made for the images section  -->
 
-                        <a class="btn custom-btn smoothscroll" href="#section_2">Let's begin</a>
-                    </div> -->
+                    <div class="col-12 mt-auto mb-5 text-center px-3 position-relative">
+  <img src="/images/logo.png" alt="Vaikom Kaitholas Logo" class="responsive-logo mb-3" />
 
-
-                    <div class="col-12 mt-auto mb-5 text-center px-3">
-    <h1 class="d-block mb-2 mobile-small-text animated-title">
-  <span class="highlight-text">Vaikom Kaitholas Presents</span>
-</h1>
-
-
-    <h4 class="text-white mb-2 mobile-heading">ആമലവെട്ട്</h4>
-
-    <a class="btn custom-btn smoothscroll mobile-btn" href="#section_2">Let's begin</a>
+  <div class="social-section w-100">
+    <div class="text-white mb-2 text-center">Our Pages:</div>
+    <ul class="social-list">
+      <li>
+        <a target="_blank" href="https://www.facebook.com/vaikom.kaitholas/" class="social-icon-link">
+          <span class="bi-facebook"></span>
+        </a>
+      </li>
+      <li>
+        <a target="_blank" href="https://www.youtube.com/channel/UCKSN1rAQYeYLepxVMnr6hCA" class="social-icon-link">
+          <span class="bi-youtube"></span>
+        </a>
+      </li>
+      <li>
+        <a target="_blank" href="https://www.instagram.com/vaikomkaitholas" class="social-icon-link">
+          <span class="bi-instagram"></span>
+        </a>
+      </li>
+      <li>
+        <a target="_blank" href="https://wa.me/916238012281" class="social-icon-link">
+          <span class="bi-whatsapp"></span>
+        </a>
+      </li>
+    </ul>
+  </div>
 </div>
 
-<style>
+</div>
+ </div>  
 
-    /* Highlight just for "Vaikom Kaitholas" */
-.highlight-text {
-  font-family: 'Cinzel', serif;/* Use Cinzel font */
-  background: linear-gradient(90deg, #ffffff, #b7b5b5);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  font-weight: bold;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-  font-size: 1.6rem;
-  white-space: nowrap; /* Prevents wrapping */
+
+
+
+            <div class="video-wrap">
+                <video autoplay="" loop="" muted="" class="custom-video" poster="">
+                    <source src="/public/video/kait.mp4" type="video/mp4">  
+                </video>
+            </div>
+
+
+            <style>
+
+                /* Responsive logo styling */
+
+
+.responsive-logo {
+  max-width: 100%;
+  height: auto;
+  width: 550px;
+  z-index: 2;
+  position: relative;
+
 }
 
-/* Simple style for "Presents" */
-.present-text {
-  font-family: inherit;
-  font-size: 1.2rem;
-  color: white;
+.responsive-logo:hover {
+  transform: scale(1.15) translateY(-10px);
+  filter: drop-shadow(0 0 30px rgba(255, 255, 255, 1));
+  cursor: pointer;
 }
 
-/* Optional spacing fix */
+
+/* Responsive adjustments */
 @media (max-width: 768px) {
-  .highlight-text {
-    font-size: 1.2rem;
+  .responsive-logo {
+    width: 350px;
   }
+}
 
-  .present-text {
-    font-size: 1rem;
+@media (max-width: 480px) {
+  .responsive-logo {
+    width: 250px;
   }
 }
 
 @media (max-width: 360px) {
-  .highlight-text {
-    font-size: 1rem;
+  .responsive-logo {
+     max-width: 100%;
+  height: auto;
+  width: 550px;
+  z-index: 2;
+  position: relative;
+  }
+}
+@media (max-width: 320px) {
+  .responsive-logo {
+    width: 320px;        /* Smaller logo size */
+    margin-top: -90px;    /* Move logo higher */
   }
 
-  .present-text {
-    font-size: 0.9rem;
+ 
+}
+
+/* Social section */
+.social-section {
+  margin-top: 20px;
+  padding: 10px 0;
+  z-index: 2;
+  position: relative;
+}
+
+/* List styles */
+.social-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+/* Icon styles */
+.social-icon-link {
+  color: #fff;
+  font-size: 1.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 15px;
+  height: 15px;
+  background-color: rgba(255, 255, 255, 0.15);
+  border-radius: 50%;
+  transition: 0.3s ease;
+  margin-right: 18px;
+}
+
+.social-icon-link:hover {
+  background-color: #fff;
+  color: #000;
+}
+
+/* Extra fix for mobile spacing */
+@media (max-width: 480px) {
+  .social-section {
+    padding-bottom: 10px;
   }
 }
 
-</style>
-
-
-                    <div class="col-lg-12 col-12 mt-auto d-flex flex-column flex-lg-row text-center align-items-center justify-content-center gap-3 flex-wrap">
-    
-    <!-- Location Section -->
-    <div class="date-wrap w-100">
-        <a target="_blank" href="https://maps.app.goo.gl/Y3e6psPemxaR8w4Q6">
-            <h5 class="text-white mb-0">
-                <i class="custom-icon bi-geo-alt me-2"></i>
-                Vaikom, Kottayam, Kerala
-            </h5>
-        </a>
-    </div>
-
-    <!-- Social Media Section -->
-    <div class="social-share w-100">
-        <div class="text-white mb-2 text-center">Our Pages:</div>
-        <ul class="social-icon d-flex align-items-center justify-content-center flex-wrap gap-2 p-0 m-0">
-            <li class="social-icon-item list-unstyled">
-                <a target="_blank" href="https://www.facebook.com/vaikom.kaitholas/" class="social-icon-link">
-                    <span class="bi-facebook"></span>
-                </a>
-            </li>
-
-            <li class="social-icon-item list-unstyled">
-                <a target="_blank" href="https://www.youtube.com/channel/UCKSN1rAQYeYLepxVMnr6hCA" class="social-icon-link">
-                    <span class="bi-youtube"></span>
-                </a>
-            </li>
-
-            <li class="social-icon-item list-unstyled">
-                <a target="_blank" href="https://www.instagram.com/vaikomkaitholas" class="social-icon-link">
-                    <span class="bi-instagram"></span>
-                </a>
-            </li>
-
-            <li class="social-icon-item list-unstyled">
-                <a target="_blank" href="https://wa.me/916238012281" class="social-icon-link">
-                    <span class="bi-whatsapp"></span>
-                </a>
-            </li>
-        </ul>
-    </div>
-</div>
 
 
 
-                </div>
-            </div>
-
-            <div class="video-wrap">
-                <video autoplay="" loop="" muted="" class="custom-video" poster="">
-                    <source src="/public/video/kait.mp4" type="video/mp4">
-
-                    
-                </video>
-            </div>
+            </style>
         </section>
 
 
@@ -1208,7 +1549,7 @@ https://templatemo.com/tm-583-festava-live
                 </div>
             </div>
         </section> -->
-
+<!-- 
         <section class="artists-section section-padding" id="section_3">
     <div class="container">
         <div class="row justify-content-center text-center">
@@ -1317,7 +1658,937 @@ https://templatemo.com/tm-583-festava-live
     }
 }
 
-</style>
+</style> -->
+
+<!-- ------------------------------------------------------------------------------------------------>
+
+    <style>
+        /* Spacer sections */
+        .spacer {
+            height: 100vh;
+            background: linear-gradient(45deg, #1a1a1a, #0f0f0f);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 2rem;
+        }
+
+        /* Common section styles */
+        .horizontal-section {
+            height: 80vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .section-content {
+            display: flex;
+            align-items: center;
+            height: 100%;
+            will-change: transform;
+            transition: transform 0.1s linear;
+        }
+
+        .ssection-title {
+            position: absolute;
+            top: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #000000;
+            font-size: 2.5rem;
+            font-weight: 600;
+            z-index: 10;
+            text-align: center;
+        }
+
+        /* Card styles */
+        .card {
+            min-width: 320px;
+            margin: 0 20px;
+            background: linear-gradient(145deg, #1f1f1f, #2c2c2c);
+            border-radius: 20px;
+            padding: 30px 20px;
+            text-align: center;
+            color: #ffffff;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-10px) scale(1.02);
+        }
+
+        .card-photo {
+            width: 130px;
+            height: 130px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 3px solid #ffffff33;
+            margin: 0 auto 20px;
+            display: block;
+            background: linear-gradient(45deg, #333, #555);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .card-photo:hover {
+            border-color: #ffffff66;
+            transform: scale(1.05);
+        }
+
+        .card-name {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .card-role {
+            font-size: 1rem;
+            color: #bbbbbb;
+        }
+
+        /* Navigation Arrows */
+        .nav-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 20;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-arrow:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.5);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .nav-arrow.left {
+            left: 20px;
+        }
+
+        .nav-arrow.right {
+            right: 20px;
+        }
+
+        .nav-arrow svg {
+            width: 24px;
+            height: 24px;
+            fill: #fff;
+        }
+
+        .nav-arrow.disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+
+        /* Progress indicator */
+        .scroll-progress {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+            z-index: 20;
+        }
+
+        .progress-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .progress-dot.active {
+            background: #fff;
+            transform: scale(1.2);
+        }
+
+        /* Popup Modal Styles */
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .popup-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .popup-content {
+            background: linear-gradient(145deg, #1f1f1f, #2c2c2c);
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            color: #ffffff;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
+            transform: scale(0.8);
+            transition: all 0.3s ease;
+        }
+
+        .popup-overlay.active .popup-content {
+            transform: scale(1);
+        }
+
+        .popup-image {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 20px;
+            margin: 0 auto 20px;
+            display: block;
+            border: 3px solid #ffffff33;
+        }
+
+        .popup-name {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #ffffff;
+        }
+
+        .popup-role {
+            font-size: 1.2rem;
+            color: #bbbbbb;
+            margin-bottom: 20px;
+        }
+
+        .popup-bio {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #cccccc;
+            margin-bottom: 30px;
+        }
+
+        .popup-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .popup-close:hover {
+            background: rgba(255, 0, 0, 0.2);
+            border-color: rgba(255, 0, 0, 0.5);
+        }
+
+        .popup-close svg {
+            width: 20px;
+            height: 20px;
+            fill: #fff;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .card {
+                min-width: 280px;
+                margin: 0 15px;
+                padding: 25px 15px;
+            }
+
+            .card-photo {
+                width: 100px;
+                height: 100px;
+            }
+
+            .card-name {
+                font-size: 1.3rem;
+            }
+
+            .card-role {
+                font-size: 0.95rem;
+            }
+
+            .ssection-title {
+                font-size: 2rem;
+                top: 30px;
+            }
+
+            .popup-content {
+                padding: 30px 20px;
+                max-width: 350px;
+            }
+
+            .popup-image {
+                width: 150px;
+                height: 150px;
+            }
+
+            .popup-name {
+                font-size: 1.5rem;
+            }
+
+            .popup-role {
+                font-size: 1rem;
+            }
+
+            .popup-bio {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+
+    <!-- Managers Section -->
+    <section class="horizontal-section managers-section" id="managers-section">
+        <h2 class="ssection-title">Meet Our Managers</h2>
+        
+        <!-- Navigation Arrows -->
+        <div class="nav-arrow left" id="managers-left" onclick="scrollSection('managers', -1)">
+            <svg viewBox="0 0 24 24">
+                <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" />
+            </svg>
+        </div>
+        <div class="nav-arrow right" id="managers-right" onclick="scrollSection('managers', 1)">
+            <svg viewBox="0 0 24 24">
+                <path d="M8.59 16.59L10 18l6-6-6-6-1.41 1.41L13.17 12z"/>
+            </svg>
+        </div>
+
+        <!-- Progress Dots -->
+        <div class="scroll-progress" id="managers-progress">
+            <div class="progress-dot active"></div>
+            <div class="progress-dot"></div>
+            <div class="progress-dot"></div>
+            <div class="progress-dot"></div>
+            <div class="progress-dot"></div>
+            <div class="progress-dot"></div>
+        </div>
+
+        <div class="section-content" id="managers-content">
+            <div class="card">
+                <img src="images\artists\nandhu.JPG" alt="Akash Stalin" class="card-photo" onclick="openPopup('akash-stalin')">
+                <h4 class="card-name">Nandhu Rajesh</h4>
+                <p class="card-role">Senior Manager</p>
+            </div>
+            <div class="card">
+                <img src="images\artists\thakkudu.JPG" alt="Priya Sharma" class="card-photo" onclick="openPopup('priya-sharma')">
+                <h4 class="card-name">Akash Stalin</h4>
+                <p class="card-role">Creative Manager</p>
+            </div>
+            <div class="card">
+                <img src="images\artists\abhiram2.JPG" alt="Raj Kumar" class="card-photo" onclick="openPopup('raj-kumar')">
+                <h4 class="card-name">Abhiram Vinoy</h4>
+                <p class="card-role">Operations Manager</p>
+            </div>
+            <div class="card">
+                <img src="images\artists\thakkudu.JPG" alt="Maya Singh" class="card-photo" onclick="openPopup('maya-singh')">
+                <h4 class="card-name">Naveen Santhosh</h4>
+                <p class="card-role">Marketing Manager</p>
+            </div>
+            <div class="card">
+                <img src="images\artists\thakkudu.JPG" alt="Arjun Nair" class="card-photo" onclick="openPopup('arjun-nair')">
+                <h4 class="card-name">Stalin</h4>
+                <p class="card-role">Technical Manager</p>
+            </div>
+            <div class="card">
+                <img src="images\artists\thakkudu.JPG" alt="Kavya Menon" class="card-photo" onclick="openPopup('kavya-menon')">
+                <h4 class="card-name">Jayan</h4>
+                <p class="card-role">HR Manager</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Artists Section -->
+    <section class="horizontal-section artists-section" id="artists-section">
+        <h2 class="ssection-title">Meet Our Artists</h2>
+        
+        <!-- Navigation Arrows -->
+        <div class="nav-arrow left" id="artists-left" onclick="scrollSection('artists', -1)">
+            <svg viewBox="0 0 24 24">
+                <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+            </svg>
+        </div>
+        <div class="nav-arrow right" id="artists-right" onclick="scrollSection('artists', 1)">
+            <svg viewBox="0 0 24 24">
+                <path d="M8.59 16.59L10 18l6-6-6-6-1.41 1.41L13.17 12z"/>
+            </svg>
+        </div>
+
+        <!-- Progress Dots -->
+        <div class="scroll-progress" id="artists-progress">
+            <div class="progress-dot active"></div>
+            <div class="progress-dot"></div>
+            <div class="progress-dot"></div>
+            <div class="progress-dot"></div>
+            <div class="progress-dot"></div>
+            <div class="progress-dot"></div>
+        </div>
+
+        <div class="section-content" id="artists-content">
+            <div class="card">
+                <img src="images\artists\thakkudu.JPG" alt="Sona" class="card-photo" onclick="openPopup('sona')">
+                <h4 class="card-name">Sona</h4>
+                <p class="card-role">Lead Singer</p>
+            </div>
+            <div class="card">
+                <img src="images\artists\thakkudu.JPG" alt="Ravi Beats" class="card-photo" onclick="openPopup('ravi-beats')">
+                <h4 class="card-name">Ravi Beats</h4>
+                <p class="card-role">Music Producer</p>
+            </div>
+            <div class="card">
+                <img src="images\artists\thakkudu.JPG" alt="Aditi Voice" class="card-photo" onclick="openPopup('aditi-voice')">
+                <h4 class="card-name">Aditi Voice</h4>
+                <p class="card-role">Vocalist</p>
+            </div>
+            <div class="card">
+                <img src="images\artists\thakkudu.JPG" alt="DJ Karthik" class="card-photo" onclick="openPopup('dj-karthik')">
+                <h4 class="card-name">DJ Karthik</h4>
+                <p class="card-role">Electronic Artist</p>
+            </div>
+            <div class="card">
+                <img src="images\artists\thakkudu.JPG" alt="Meera Classical" class="card-photo" onclick="openPopup('meera-classical')">
+                <h4 class="card-name">Meera Classical</h4>
+                <p class="card-role">Classical Singer</p>
+            </div>
+            <div class="card">
+                <img src="images\artists\thakkudu.JPG" alt="Rohan Guitar" class="card-photo" onclick="openPopup('rohan-guitar')">
+                <h4 class="card-name">Rohan Guitar</h4>
+                <p class="card-role">Guitarist</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Popup Modal -->
+    <div class="popup-overlay" id="popup-overlay" onclick="closePopup()">
+        <div class="popup-content" onclick="event.stopPropagation()">
+            <div class="popup-close" onclick="closePopup()">
+                <svg viewBox="0 0 24 24">
+                    <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+                </svg>
+            </div>
+            <img id="popup-image" src="" alt="" class="popup-image">
+            <h3 id="popup-name" class="popup-name"></h3>
+            <p id="popup-role" class="popup-role"></p>
+            <p id="popup-bio" class="popup-bio"></p>
+        </div>
+    </div>
+
+    <script>
+        // Team member data with image paths and bios
+        const teamData = {
+            // Managers
+            'akash-stalin': {
+                name: 'Akash Stalin',
+                role: 'Senior Manager',
+                image: 'images\artists\thakkudu.JPG',
+                bio: 'Akash is a seasoned professional with over 10 years of experience in team management and strategic planning. He leads our core operations and ensures smooth workflow across all departments.'
+            },
+            'priya-sharma': {
+                name: 'Priya Sharma',
+                role: 'Creative Manager',
+                image: 'images\artists\thakkudu.JPG',
+                bio: 'Priya brings creative vision to life with her innovative approach to design and brand strategy. She has a keen eye for aesthetics and leads our creative initiatives.'
+            },
+            'raj-kumar': {
+                name: 'Raj Kumar',
+                role: 'Operations Manager',
+                image: 'images\artists\thakkudu.JPG',
+                bio: 'Raj ensures our daily operations run smoothly and efficiently. With his expertise in process optimization, he keeps our team productive and motivated.'
+            },
+            'maya-singh': {
+                name: 'Maya Singh',
+                role: 'Marketing Manager',
+                image: 'path/to/maya-singh.jpg',
+                bio: 'Maya is our marketing guru who develops strategic campaigns that connect with our audience. Her data-driven approach has significantly boosted our brand presence.'
+            },
+            'arjun-nair': {
+                name: 'Arjun Nair',
+                role: 'Technical Manager',
+                image: 'path/to/arjun-nair.jpg',
+                bio: 'Arjun leads our technical team with expertise in cutting-edge technologies. He ensures our systems are robust, scalable, and ahead of industry standards.'
+            },
+            'kavya-menon': {
+                name: 'Kavya Menon',
+                role: 'HR Manager',
+                image: 'path/to/kavya-menon.jpg',
+                bio: 'Kavya creates a positive work environment and manages our human resources with care and professionalism. She ensures every team member feels valued and supported.'
+            },
+            // Artists
+            'sona': {
+                name: 'Sona',
+                role: 'Lead Singer',
+                image: 'path/to/sona.jpg',
+                bio: 'Sona\'s powerful vocals and stage presence have captivated audiences worldwide. With her versatile singing style, she brings emotion and energy to every performance.'
+            },
+            'ravi-beats': {
+                name: 'Ravi Beats',
+                role: 'Music Producer',
+                image: 'path/to/ravi-beats.jpg',
+                bio: 'Ravi is a master of sound engineering and music production. His innovative beats and compositions have topped charts and defined new musical trends.'
+            },
+            'aditi-voice': {
+                name: 'Aditi Voice',
+                role: 'Vocalist',
+                image: 'path/to/aditi-voice.jpg',
+                bio: 'Aditi\'s melodious voice and technical prowess make her one of the most sought-after vocalists. She excels in both contemporary and classical music styles.'
+            },
+            'dj-karthik': {
+                name: 'DJ Karthik',
+                role: 'Electronic Artist',
+                image: 'path/to/dj-karthik.jpg',
+                bio: 'DJ Karthik creates electrifying music that gets crowds moving. His unique blend of electronic and traditional sounds has made him a favorite at festivals and clubs.'
+            },
+            'meera-classical': {
+                name: 'Meera Classical',
+                role: 'Classical Singer',
+                image: 'path/to/meera-classical.jpg',
+                bio: 'Meera is a classically trained vocalist with years of experience in traditional music. Her pure voice and deep understanding of classical ragas mesmerize listeners.'
+            },
+            'rohan-guitar': {
+                name: 'Rohan Guitar',
+                role: 'Guitarist',
+                image: 'path/to/rohan-guitar.jpg',
+                bio: 'Rohan\'s guitar skills span multiple genres from rock to classical. His soulful playing and technical expertise make him an invaluable part of our musical ensemble.'
+            }
+        };
+
+        // Popup functions
+        function openPopup(memberId) {
+            const member = teamData[memberId];
+            if (member) {
+                document.getElementById('popup-image').src = member.image;
+                document.getElementById('popup-image').alt = member.name;
+                document.getElementById('popup-name').textContent = member.name;
+                document.getElementById('popup-role').textContent = member.role;
+                document.getElementById('popup-bio').textContent = member.bio;
+                document.getElementById('popup-overlay').classList.add('active');
+                document.body.style.overflow = 'hidden'; // Prevent background scrolling
+            }
+        }
+
+        function closePopup() {
+            document.getElementById('popup-overlay').classList.remove('active');
+            document.body.style.overflow = 'auto'; // Restore scrolling
+        }
+
+        // Close popup on Escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closePopup();
+            }
+        });
+
+        // Manual scroll positions for each section
+        let scrollPositions = {
+            managers: 0,
+            artists: 0
+        };
+
+        const maxScrollPositions = {
+            managers: 5, // 6 cards - 1
+            artists: 5   // 6 cards - 1
+        };
+
+        // Smooth horizontal scrolling animation
+        function initHorizontalScroll() {
+            const managersSection = document.getElementById('managers-section');
+            const managersContent = document.getElementById('managers-content');
+            const artistsSection = document.getElementById('artists-section');
+            const artistsContent = document.getElementById('artists-content');
+
+            function updateScrollAnimations() {
+                const scrollY = window.scrollY;
+                const windowHeight = window.innerHeight;
+
+                // Managers section animation
+                const managersRect = managersSection.getBoundingClientRect();
+                if (managersRect.top <= windowHeight && managersRect.bottom >= 0) {
+                    const progress = Math.max(0, Math.min(1, (windowHeight - managersRect.top) / windowHeight));
+                    const translateX = -progress * 50; // Slide from right to left
+                    managersContent.style.transform = `translateX(${translateX}%)`;
+                }
+
+                // Artists section animation  
+                const artistsRect = artistsSection.getBoundingClientRect();
+                if (artistsRect.top <= windowHeight && artistsRect.bottom >= 0) {
+                    const progress = Math.max(0, Math.min(1, (windowHeight - artistsRect.top) / windowHeight));
+                    const translateX = progress * 50 - 50; // Slide from left to right
+                    artistsContent.style.transform = `translateX(${translateX}%)`;
+                }
+            }
+
+            // Use requestAnimationFrame for smooth performance
+            let ticking = false;
+            function requestTick() {
+                if (!ticking) {
+                    requestAnimationFrame(updateScrollAnimations);
+                    ticking = true;
+                    setTimeout(() => ticking = false, 16); // ~60fps
+                }
+            }
+
+            window.addEventListener('scroll', requestTick);
+            updateScrollAnimations(); // Initial call
+        }
+
+        // Manual scroll function for arrows
+        function scrollSection(section, direction) {
+            const currentPos = scrollPositions[section];
+            const newPos = Math.max(0, Math.min(maxScrollPositions[section], currentPos + direction));
+            
+            if (newPos !== currentPos) {
+                scrollPositions[section] = newPos;
+                updateManualScroll(section);
+                updateProgressDots(section);
+                updateArrowStates(section);
+            }
+        }
+
+        // Update manual scroll position
+        function updateManualScroll(section) {
+            const content = document.getElementById(`${section}-content`);
+            const cardWidth = 360; // card width + margin
+            const translateX = -scrollPositions[section] * cardWidth;
+            
+            // Override the scroll-based animation temporarily
+            content.style.transition = 'transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+            content.style.transform = `translateX(${translateX}px)`;
+            
+            // Reset transition after animation
+            setTimeout(() => {
+                content.style.transition = 'transform 0.1s linear';
+            }, 500);
+        }
+
+        // Update progress dots
+        function updateProgressDots(section) {
+            const progressContainer = document.getElementById(`${section}-progress`);
+            const dots = progressContainer.querySelectorAll('.progress-dot');
+            
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === scrollPositions[section]);
+            });
+        }
+
+        // Update arrow states
+        function updateArrowStates(section) {
+            const leftArrow = document.getElementById(`${section}-left`);
+            const rightArrow = document.getElementById(`${section}-right`);
+            
+            leftArrow.classList.toggle('disabled', scrollPositions[section] === 0);
+            rightArrow.classList.toggle('disabled', scrollPositions[section] === maxScrollPositions[section]);
+        }
+
+        // Initialize progress dots and arrows
+        function initManualControls() {
+            ['managers', 'artists'].forEach(section => {
+                updateProgressDots(section);
+                updateArrowStates(section);
+            });
+        }
+
+        // Intersection Observer for performance optimization
+        function initIntersectionObserver() {
+            const sections = document.querySelectorAll('.horizontal-section');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('in-view');
+                    }
+                });
+            }, {
+                threshold: 0.1,
+                rootMargin: '50px'
+            });
+
+            sections.forEach(section => observer.observe(section));
+        }
+
+        // Smooth scroll behavior
+        function addSmoothScrollBehavior() {
+            document.documentElement.style.scrollBehavior = 'smooth';
+        }
+
+        // Initialize everything when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            initHorizontalScroll();
+            initIntersectionObserver();
+            addSmoothScrollBehavior();
+            initManualControls();
+        });
+
+        // Handle resize for responsive behavior
+        window.addEventListener('resize', () => {
+            // Recalculate positions on resize
+            setTimeout(() => {
+                const event = new Event('scroll');
+                window.dispatchEvent(event);
+                // Reset manual scroll positions
+                ['managers', 'artists'].forEach(section => {
+                    updateManualScroll(section);
+                });
+            }, 100);
+        });
+
+        // Touch/swipe support for mobile
+        let touchStartX = 0;
+        let touchEndX = 0;
+        let currentSection = null;
+
+        function handleTouchStart(e, section) {
+            touchStartX = e.changedTouches[0].screenX;
+            currentSection = section;
+        }
+
+        function handleTouchEnd(e, section) {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe(section);
+        }
+
+        function handleSwipe(section) {
+            const swipeThreshold = 50;
+            const swipeDistance = touchStartX - touchEndX;
+            
+            if (Math.abs(swipeDistance) > swipeThreshold) {
+                if (swipeDistance > 0) {
+                    // Swipe left - go to next
+                    scrollSection(section, 1);
+                } else {
+                    // Swipe right - go to previous
+                    scrollSection(section, -1);
+                }
+            }
+        }
+
+        // Add touch listeners
+        document.addEventListener('DOMContentLoaded', () => {
+            const managersContent = document.getElementById('managers-content');
+            const artistsContent = document.getElementById('artists-content');
+            
+            managersContent.addEventListener('touchstart', (e) => handleTouchStart(e, 'managers'));
+            managersContent.addEventListener('touchend', (e) => handleTouchEnd(e, 'managers'));
+            
+            artistsContent.addEventListener('touchstart', (e) => handleTouchStart(e, 'artists'));
+            artistsContent.addEventListener('touchend', (e) => handleTouchEnd(e, 'artists'));
+        });
+    </script>
+
+
+
+
+
+<!-- ------------------------------------------------------------------------------------- -->
+
+
+<!-- 
+<section class="directors-sec section-padding" id="section_directors">
+    <div class="container">
+        <div class="row text-center mb-5">
+            <div class="col-12">
+                <h2 class="mb-4 text-white">Meet Our Managers</h2>
+            </div>
+        </div>
+        <div class="row justify-content-center g-4">
+            <div class="col-md-4">
+                <div class="director-card">
+                    <img src="images/artists/thakkudu.JPG" class="director-photo" alt="Director 1">
+                    <h4 class="director-name">Akash Stalin</h4>
+                    <p class="director-role">Manager</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="director-card">
+                    <img src="images/artists/abhiram.JPG" class="director-photo" alt="Director 1">
+                    <h4 class="director-name">Akash Stalin</h4>
+                    <p class="director-role">Manager</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="director-card">
+                    <img src="images/artists/abhiram.JPG" class="director-photo" alt="Director 1">
+                    <h4 class="director-name">Akash Stalin</h4>
+                    <p class="director-role">Manager</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="director-card">
+                    <img src="images/artists/abhiram.JPG" class="director-photo" alt="Director 1">
+                    <h4 class="director-name">Akash Stalin</h4>
+                    <p class="director-role">Manager</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="director-card">
+                    <img src="images/artists/abhiram.JPG" class="director-photo" alt="Director 1">
+                    <h4 class="director-name">Akash Stalin</h4>
+                    <p class="director-role">Manager</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="director-card">
+                    <img src="images/artists/abhiram.JPG" class="director-photo" alt="Director 1">
+                    <h4 class="director-name">Akash Stalin</h4>
+                    <p class="director-role">Manager</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="artists-sec section-padding" id="section_artists">
+    <div class="container">
+        <div class="row text-center mb-5">
+            <div class="col-12">
+                <h2 class="mb-4 text-white">Meet Our Artists</h2>
+            </div>
+        </div>
+        <div class="row justify-content-center g-4">
+            <div class="col-md-4">
+                <div class="artist-card">
+                    <img src="images/artists/sona.JPG"" class="artist-photo" alt="Artist 1">
+                    <h4 class="artist-name">Sona</h4>
+                    <p class="artist-role">Singer</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="artist-card">
+                    <img src="images/artists/sona.JPG"" class="artist-photo" alt="Artist 1">
+                    <h4 class="artist-name">Sona</h4>
+                    <p class="artist-role">Singer</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="artist-card">
+                    <img src="images/artists/sona.JPG"" class="artist-photo" alt="Artist 1">
+                    <h4 class="artist-name">Sona</h4>
+                    <p class="artist-role">Singer</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+.section-padding {
+    padding: 60px 0;
+}
+
+.directors-sec {
+    background-color: #121212;
+}
+
+.director-card {
+    background: linear-gradient(145deg, #1f1f1f, #2c2c2c);
+    border-radius: 20px;
+    padding: 30px 20px;
+    text-align: center;
+    color: #ffffff;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+    transition: transform 0.3s ease;
+}
+
+.director-card:hover {
+    transform: translateY(-10px);
+}
+
+.director-photo {
+    width: 130px;
+    height: 130px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 3px solid #ffffff33;
+    margin-bottom: 20px;
+}
+
+.director-name {
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.director-role {
+    font-size: 1rem;
+    color: #bbbbbb;
+}
+
+.artists-sec {
+    background-color: #0a0a0a;
+}
+
+.artist-card {
+    background: linear-gradient(135deg, #1b1b1b, #292929);
+    border-radius: 20px;
+    padding: 30px 20px;
+    text-align: center;
+    color: #ffffff;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+    transition: transform 0.3s ease;
+}
+
+.artist-card:hover {
+    transform: scale(1.03);
+}
+
+.artist-photo {
+    width: 130px;
+    height: 130px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 3px solid #ffffff33;
+    margin-bottom: 20px;
+}
+
+.artist-name {
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.artist-role {
+    font-size: 1rem;
+    color: #bbbbbb;
+}
+
+@media (max-width: 768px) {
+    .director-photo, .artist-photo {
+        width: 100px;
+        height: 100px;
+    }
+
+    .director-name, .artist-name {
+        font-size: 1.3rem;
+    }
+
+    .director-role, .artist-role {
+        font-size: 0.95rem;
+    }
+}
+</style> -->
+
 
 <!-- 
         <section class="schedule-section section-padding" id="section_4">
