@@ -349,7 +349,7 @@ strong {
   SITE HEADER              
 -----------------------------------------*/
 .site-header {
-  background-color: var(--primary-color);
+  background: linear-gradient(145deg, #866a35, #866a35);
   padding-top: 12px;
   padding-bottom: 12px;
 }
