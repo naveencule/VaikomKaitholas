@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+
+    <style>
+
+        /* Spacer sections */
+        .spacer {
+            height: 100vh;
+            background: linear-gradient(45deg, #1a1a1a, #0f0f0f);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 2rem;
+        }
+
+        /* Common section styles */
+        .horizontal-section {
+            height: 80vh;
+            overflow: hidden;
+            position: relative;
+            background: #ffffff;
+            padding-top: 80px;
+        }
+
+        .section-content {
+            display: flex;
+            align-items: center;
+            height: calc(100% - 80px);
+            will-change: transform;
+            transition: transform 0.1s linear;
+            padding: 0 50px;
+        }
+
+        .ssection-title {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #000000;
+            font-size: 2.5rem;
+            font-weight: 600;
+            z-index: 10;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 10px 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Card styles */
+        .card {
+            min-width: 320px;
+            margin: 0 20px;
+            background: linear-gradient(140deg, #0a0a0a, #866a35);
+            border-radius: 20px;
+            padding: 30px 20px;
+            text-align: center;
+            color: #ffffff;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-10px) scale(1.02);
+        }
+
+        .card-photo {
+            width: 130px;
+            height: 130px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 3px solid #ffffff33;
+            margin: 0 auto 20px;
+            display: block;
+            background: linear-gradient(45deg, #333, #555);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .card-photo:hover {
+            border-color: #ffffff66;
+            transform: scale(1.05);
+        }
+
+        .card-name {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .card-role {
+            font-size: 1rem;
+            color: #bbbbbb;
+        }
+
+        /* Navigation Arrows */
+        .nav-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 50px;
+            height: 50px;
+            background: rgba(0, 0, 0, 0.1);
+            border: 2px solid rgba(0, 0, 0, 0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 20;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-arrow:hover {
+            background: rgba(0, 0, 0, 0.2);
+            border-color: rgba(0, 0, 0, 0.5);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .nav-arrow.left {
+            left: 20px;
+        }
+
+        .nav-arrow.right {
+            right: 20px;
+        }
+
+        .nav-arrow svg {
+            width: 24px;
+            height: 24px;
+            fill: #000;
+        }
+
+        .nav-arrow.disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+
+        /* Progress indicator */
+        .scroll-progress {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+            z-index: 20;
+        }
+
+        .progress-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .progress-dot.active {
+            background: #000;
+            transform: scale(1.2);
+        }
+
+        /* Popup Modal Styles */
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .popup-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .popup-content {
+            background: linear-gradient(140deg, #0a0a0a, #866a35);
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            color: #ffffff;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
+            transform: scale(0.8);
+            transition: all 0.3s ease;
+            position: relative;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .popup-overlay.active .popup-content {
+            transform: scale(1);
+        }
+
+        .popup-image {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 20px;
+            margin: 0 auto 20px;
+            display: block;
+            border: 3px solid #ffffff33;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .popup-image:hover {
+            transform: scale(1.05);
+        }
+
+        .popup-image.fullscreen {
+            width: 90vw;
+            max-width: 600px;
+            height: auto;
+            max-height: 90vh;
+            border-radius: 10px;
+            object-fit: contain;
+        }
+
+        .popup-name {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #ffffff;
+        }
+
+        .popup-role {
+            font-size: 1.2rem;
+            color: #bbbbbb;
+            margin-bottom: 20px;
+        }
+
+        .popup-bio {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #cccccc;
+            margin-bottom: 20px;
+        }
+
+        .popup-instagram {
+            margin-top: 20px;
+        }
+
+        .instagram-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+            color: white;
+            text-decoration: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            font-weight: 600;
+            transition: transform 0.3s ease;
+        }
+
+        .instagram-link:hover {
+            transform: scale(1.05);
+        }
+
+        .instagram-icon {
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
+        }
+
+        .popup-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .popup-close:hover {
+            background: rgba(255, 0, 0, 0.2);
+            border-color: rgba(255, 0, 0, 0.5);
+        }
+
+        .popup-close svg {
+            width: 20px;
+            height: 20px;
+            fill: #fff;
+        }
+
+        /* Responsive */
+        @media (max-width: 500px) {
+            .card {
+                min-width: 280px;
+                margin: 0 15px;
+                padding: 25px 15px;
+            }
+
+            .card-photo {
+                width: 100px;
+                height: 100px;
+            }
+
+            .card-name {
+                font-size: 1.3rem;
+            }
+
+            .card-role {
+                font-size: 0.95rem;
+            }
+
+            .ssection-title {
+                font-size: 2rem;
+                top: 15px;
+                padding: 8px 20px;
+            }
+
+            .horizontal-section {
+                padding-top: 70px;
+            }
+
+            .section-content {
+                height: calc(100% - 70px);
+                padding: 0 30px;
+            }
+
+            .popup-content {
+                padding: 30px 20px;
+                max-width: 350px;
+            }
+
+            .popup-image {
+                width: 150px;
+                height: 150px;
+            }
+
+            .popup-name {
+                font-size: 1.5rem;
+            }
+
+            .popup-role {
+                font-size: 1rem;
+            }
+
+            .popup-bio {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+<body>
+    
+
+
+
+    <!-- Managers Section -->
+    <section class="horizontal-section managers-section" id="managers-section">
+        <h2 class="ssection-title">Managers</h2>
+        
+        <!-- Navigation Arrows -->
+        <div class="nav-arrow left" id="managers-left" onclick="scrollSection('managers', -1)">
+            <svg viewBox="0 0 24 24">
+                <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" />
+            </svg>
+        </div>
+        <div class="nav-arrow right" id="managers-right" onclick="scrollSection('managers', 1)">
+            <svg viewBox="0 0 24 24">
+                <path d="M8.59 16.59L10 18l6-6-6-6-1.41 1.41L13.17 12z"/>
+            </svg>
+        </div>
+
+        <!-- Progress Dots -->
+        <!-- <div class="scroll-progress" id="managers-progress">
+            <div class="progress-dot active"></div>
+            <div class="progress-dot"></div>
+            <div class="progress-dot"></div>
+            <div class="progress-dot"></div>
+            <div class="progress-dot"></div>
+            <div class="progress-dot"></div>
+        </div> -->
+
+        <div class="section-content" id="managers-content">
+            <div class="card">
+                <img src="/images/artists/nandhu.png" alt="Nandhu Rajesh" class="card-photo" onclick="openPopup('nandhu-rajesh')">
+                <h4 class="card-name">Nandhu Rajesh</h4>
+                <p class="card-role">Manager/Thakil</p>
+            </div>
+            <div class="card">
+                <img src="/images/artists/akash.png" alt="Akash Stalin" class="card-photo" onclick="openPopup('akash-stalin')">
+                <h4 class="card-name">Akash Stalin</h4>
+                <p class="card-role">Manager/Singer</p>
+            </div>
+            <div class="card">
+                <img src="/images/artists/abhiram.png" alt="Abhiram Vinoy" class="card-photo" onclick="openPopup('abhiram-vinoy')">
+                <h4 class="card-name">Abhiram Vinoy</h4>
+                <p class="card-role">Manager/Singer</p>
+            </div>
+            <div class="card">
+                <img src="/images/artists/naveen.png" alt="Naveen Santhosh" class="card-photo" onclick="openPopup('naveen-santhosh')">
+                <h4 class="card-name">Naveen Santhosh</h4>
+                <p class="card-role">Manager/Singer</p>
+            </div>
+            <div class="card">
+                <img src="/images/sj.jpg" alt="Stalin" class="card-photo" onclick="openPopup('stalin')">
+                <h4 class="card-name">Stalin</h4>
+                <p class="card-role">Senior Manager</p>
+            </div>
+            <div class="card">
+                <img src="/images/sj.jpg" alt="Jayan" class="card-photo" onclick="openPopup('jayan')">
+                <h4 class="card-name">Jayan</h4>
+                <p class="card-role">Senior Manager</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Artists Section -->
+    <section class="horizontal-section artists-section" id="artists-section">
+        <h2 class="ssection-title">Artists</h2>
+        
+        <!-- Navigation Arrows -->
+        <div class="nav-arrow left" id="artists-left" onclick="scrollSection('artists', -1)">
+            <svg viewBox="0 0 24 24">
+                <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+            </svg>
+        </div>
+        <div class="nav-arrow right" id="artists-right" onclick="scrollSection('artists', 1)">
+            <svg viewBox="0 0 24 24">
+                <path d="M8.59 16.59L10 18l6-6-6-6-1.41 1.41L13.17 12z"/>
+            </svg>
+        </div>
+
+        <!-- Progress Dots -->
+        <div class="scroll-progress" id="artists-progress">
+            <div class="progress-dot active"></div>
+            <div class="progress-dot"></div>
+            <div class="progress-dot"></div>
+            <div class="progress-dot"></div>
+            <div class="progress-dot"></div>
+            <div class="progress-dot"></div>
+        </div>
+
+        <div class="section-content" id="artists-content">
+            <div class="card">
+                <img src="/images/artists/kanthu.png" alt="Sona" class="card-photo" onclick="openPopup('kanthu')">
+                <h4 class="card-name">Ahalya</h4>
+                <p class="card-role">Singer</p>
+            </div>
+            <div class="card">
+                <img src="/images/artists/sharanaya.png" alt="Ravi Beats" class="card-photo" onclick="openPopup('sharanaya')">
+                <h4 class="card-name">Sharanaya</h4>
+                <p class="card-role">Singer</p>
+            </div>
+            <div class="card">
+                <img src="/images/artists/sona.png" alt="Aditi Voice" class="card-photo" onclick="openPopup('sona')">
+                <h4 class="card-name">Sona</h4>
+                <p class="card-role">Singer</p>
+            </div>
+            <div class="card">
+                <img src="/images/artists/krishna.png" alt="DJ Karthik" class="card-photo" onclick="openPopup('krishna')">
+                <h4 class="card-name">Krishna</h4>
+                <p class="card-role">Singer</p>
+            </div>
+            <div class="card">
+                <img src="/images/artists/akki.png" alt="Meera Classical" class="card-photo" onclick="openPopup('akki')">
+                <h4 class="card-name">Akhil</h4>
+                <p class="card-role">Singer</p>
+            </div>
+            <div class="card">
+                <img src="/images/artists/amabady.png" alt="Rohan Guitar" class="card-photo" onclick="openPopup('amabady')">
+                <h4 class="card-name">Gautham Krishana</h4>
+                <p class="card-role">Thakkil</p>
+            </div>
+            <div class="card">
+                <img src="/images/artists/shinu.png" alt="Arjun Drums" class="card-photo" onclick="openPopup('shinu')">
+                <h4 class="card-name">Arjun Drums</h4>
+                <p class="card-role">Chenda</p>
+            </div>
+            <div class="card">
+                <img src="/images/artists/santa.png" alt="Priya Piano" class="card-photo" onclick="openPopup('santa')">
+                <h4 class="card-name">Priya Piano</h4>
+                <p class="card-role">Pianist</p>
+            </div>
+            <div class="card">
+                <img src="/images/artists/motta.png" alt="Kiran Bass" class="card-photo" onclick="openPopup('motta')">
+                <h4 class="card-name">Kiran Bass</h4>
+                <p class="card-role">Bassist</p>
+            </div>
+            <div class="card">
+                <img src="/images/artists/sharaon.png" alt="Maya Violin" class="card-photo" onclick="openPopup('sharaon')">
+                <h4 class="card-name">Maya Violin</h4>
+                <p class="card-role">Singer</p>
+            </div>
+            <div class="card">
+                <img src="/images/artists/vichu.png" alt="Maya Violin" class="card-photo" onclick="openPopup('vichu')">
+                <h4 class="card-name">Vishnu V</h4>
+                <p class="card-role">Rythm Pad</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Popup Modal -->
+    <div class="popup-overlay" id="popup-overlay" onclick="closePopup()">
+        <div class="popup-content" onclick="event.stopPropagation()">
+            <div class="popup-close" onclick="closePopup()">
+                <svg viewBox="0 0 24 24">
+                    <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+                </svg>
+            </div>
+            <img id="popup-image" src="" alt="" class="popup-image" onclick="toggleFullscreen()">
+            <h3 id="popup-name" class="popup-name"></h3>
+            <p id="popup-role" class="popup-role"></p>
+            <p id="popup-bio" class="popup-bio"></p>
+            <div class="popup-instagram" id="popup-instagram">
+                <!-- Instagram link will be inserted here -->
+            </div>
+        </div>
+    </div>
+<script>
+
+
+
+
+    // Team member data with image paths, bios, and Instagram links
+const teamMembers = {
+    // Managers
+    'nandhu-rajesh': {
+        name: 'Nandhu Rajesh',
+        role: 'Manager/Thakil',
+        image: '/images/artists/nandhu.png',
+        bio: 'Nandhu is our experienced Senior Manager with over 8 years in the music industry. He oversees all major operations and strategic decisions, ensuring our team delivers exceptional results.',
+        instagram: 'https://instagram.com/nandhu_rajesh'
+    },
+    'akash-stalin': {
+        name: 'Akash Stalin',
+        role: 'Manager/Singer',
+        image: '/images/artists/akash.png',
+        bio: 'Akash leads our creative vision with his innovative approach to music production and artist development. His unique perspective has shaped many of our successful projects.',
+        instagram: 'https://instagram.com/akash_stalin'
+    },
+    'abhiram-vinoy': {
+        name: 'Abhiram Vinoy',
+        role: 'Manager/Singer',
+        image: '/images/artists/abhiram.png',
+        bio: 'Abhiram ensures smooth day-to-day operations and manages our studio facilities. His attention to detail keeps everything running seamlessly.',
+        instagram: 'https://instagram.com/abhiram_vinoy'
+    },
+    'naveen-santhosh': {
+        name: 'Naveen Santhosh',
+        role: 'Manager/Singer',
+        image: '/images/artists/naveen.png',
+        bio: 'Naveen drives our marketing strategies and brand presence. His digital expertise has significantly expanded our reach across various platforms.',
+        instagram: 'https://instagram.com/naveen_santhosh'
+    },
+    'stalin': {
+        name: 'Stalin',
+        role: 'Senior Manager',
+        image: '/images/sj.jpg',
+        bio: 'Stalin manages all technical aspects of our productions, from equipment maintenance to sound engineering. His technical expertise is unmatched.',
+        instagram: 'https://instagram.com/stalin_tech'
+    },
+    'jayan': {
+        name: 'Jayan',
+        role: 'Senior Manager',
+        image: '/images/sj.jpg',
+        bio: 'Jayan takes care of our team members and ensures a positive work environment. His people skills keep our team motivated and happy.',
+        instagram: 'https://instagram.com/jayan_hr'
+    },
+    // Artists
+    'kanthu': {
+        name: 'Sona',
+        role: 'Singer',
+        image: '/images/artists/kanthu.png',
+        bio: 'Sona is our lead vocalist with a mesmerizing voice that captivates audiences. Her versatility spans across multiple genres from classical to contemporary.',
+        instagram: 'https://instagram.com/sona_singer'
+    },
+    'sharanaya': {
+        name: 'Ravi Beats',
+        role: 'Music Producer',
+        image: '/images/artists/sharanaya.png',
+        bio: 'Ravi creates amazing beats and produces tracks that top the charts. His innovative production style has earned him recognition in the industry.',
+        instagram: 'https://instagram.com/ravi_beats'
+    },
+    'sona': {
+        name: 'Aditi Voice',
+        role: 'Vocalist',
+        image: '/images/artists/sona.png',
+        bio: 'Aditi brings powerful vocals to our projects with her exceptional range and emotional depth. Her performances are always memorable.',
+        instagram: 'https://instagram.com/aditi_voice'
+    },
+    'krishna': {
+        name: 'DJ Karthik',
+        role: 'Electronic Artist',
+        image: '/images/artists/krishna.png',
+        bio: 'DJ Karthik specializes in electronic music and creates energetic tracks that get everyone dancing. His DJ sets are legendary.',
+        instagram: 'https://instagram.com/dj_karthik'
+    },
+    'akki': {
+        name: 'Meera Classical',
+        role: 'Classical Singer',
+        image: '/images/artists/akki.png',
+        bio: 'Meera is trained in classical music and brings traditional elements to our contemporary projects. Her classical foundation adds depth to our music.',
+        instagram: 'https://instagram.com/meera_classical'
+    },
+    'amabady': {
+        name: 'Rohan Guitar',
+        role: 'Guitarist',
+        image: '/images/artists/amabady.png',
+        bio: 'Rohan is our master guitarist who can play any style from rock to jazz. His guitar solos are the highlight of many of our recordings.',
+        instagram: 'https://instagram.com/rohan_guitar'
+    },
+    'shinu': {
+        name: 'Arjun Drums',
+        role: 'Drummer',
+        image: '/images/artists/shinu.png',
+        bio: 'Arjun provides the rhythmic foundation for our music with his dynamic drumming. His energy and precision drive our performances.',
+        instagram: 'https://instagram.com/arjun_drums'
+    },
+    'santa': {
+        name: 'Priya Piano',
+        role: 'Pianist',
+        image: '/images/artists/santa.png',
+        bio: 'Priya creates beautiful piano melodies that touch the soul. Her classical training combined with modern sensibility creates magic.',
+        instagram: 'https://instagram.com/priya_piano'
+    },
+    'motta': {
+        name: 'Kiran Bass',
+        role: 'Bassist',
+        image: '/images/artists/motta.png',
+        bio: 'Kiran lays down the bass lines that form the backbone of our tracks. His groove and timing are impeccable.',
+        instagram: 'https://instagram.com/kiran_bass'
+    },
+    'sharaon': {
+        name: 'Maya Violin',
+        role: 'Violinist',
+        image: '/images/artists/sharaon.png',
+        bio: 'Maya adds orchestral beauty to our compositions with her violin. Her classical training brings elegance to every piece.',
+        instagram: 'https://instagram.com/maya_violin'
+    },
+    'vichu': {
+        name: 'Vishnu V',
+        role: 'Rythm Pad',
+        image: '/images/artists/vichu.png',
+        bio: 'Vishnu is our rythm pad specialist who adds unique electronic elements to our music. His innovative use of technology enhances our sound.',
+        instagram: 'https://instagram.com/vishnu_v'
+    }
+};
+
+
+
+// Popup functions
+function openPopup(memberId) {
+    const member = teamMembers[memberId];
+    if (!member) return;
+
+    const popup = document.getElementById('popup-overlay');
+    const image = document.getElementById('popup-image');
+    const name = document.getElementById('popup-name');
+    const role = document.getElementById('popup-role');
+    const bio = document.getElementById('popup-bio');
+    const instagramContainer = document.getElementById('popup-instagram');
+
+    image.src = member.image;
+    image.alt = member.name;
+    name.textContent = member.name;
+    role.textContent = member.role;
+    bio.textContent = member.bio;
+
+    // Add Instagram link
+    if (member.instagram) {
+        instagramContainer.innerHTML = `
+            <a href="${member.instagram}" target="_blank" class="instagram-link" rel="noopener noreferrer">
+                <svg class="instagram-icon" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 
+                    3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 
+                    4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 
+                    4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 
+                    0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 
+                    1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 
+                    2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 
+                    4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 
+                    4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 
+                    0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 
+                    5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 
+                    6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 
+                    10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 
+                    4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 
+                    0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                </svg>
+                Follow on Instagram
+            </a>
+        `;
+    } else {
+        instagramContainer.innerHTML = '';
+    }
+
+    popup.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+
+function closePopup() {
+    const popup = document.getElementById('popup-overlay');
+    const image = document.getElementById('popup-image');
+
+    popup.classList.remove('active');
+    image.classList.remove('fullscreen');
+    document.body.style.overflow = '';
+}
+
+function toggleFullscreen() {
+    const image = document.getElementById('popup-image');
+    image.classList.toggle('fullscreen');
+}
+
+// Close popup on Escape key
+document.addEventListener('keydown', function(event) {
+    if (event.key === 'Escape') {
+        closePopup();
+    }
+});
+
+// Manual scroll positions for each section
+let scrollPositions = {
+    managers: 0,
+    artists: 0
+};
+
+const maxScrollPositions = {
+    managers: 5, // 6 cards - 1
+    artists: 9   // 10 cards - 1
+};
+
+// Smooth horizontal scrolling animation
+function initHorizontalScroll() {
+    const managersSection = document.getElementById('managers-section');
+    const managersContent = document.getElementById('managers-content');
+    const artistsSection = document.getElementById('artists-section');
+    const artistsContent = document.getElementById('artists-content');
+
+    function updateScrollAnimations() {
+        const scrollY = window.scrollY;
+        const windowHeight = window.innerHeight;
+
+        // Managers section animation
+        const managersRect = managersSection.getBoundingClientRect();
+        if (managersRect.top <= windowHeight && managersRect.bottom >= 0) {
+            const progress = Math.max(0, Math.min(1, (windowHeight - managersRect.top) / windowHeight));
+            const translateX = -progress * 50; // Slide from right to left
+            managersContent.style.transform = `translateX(${translateX}%)`;
+        }
+
+        // Artists section animation  
+        const artistsRect = artistsSection.getBoundingClientRect();
+        if (artistsRect.top <= windowHeight && artistsRect.bottom >= 0) {
+            const progress = Math.max(0, Math.min(1, (windowHeight - artistsRect.top) / windowHeight));
+            const translateX = progress * 50 - 50; // Slide from left to right
+            artistsContent.style.transform = `translateX(${translateX}%)`;
+        }
+    }
+
+    // Use requestAnimationFrame for smooth performance
+    let ticking = false;
+    function requestTick() {
+        if (!ticking) {
+            requestAnimationFrame(updateScrollAnimations);
+            ticking = true;
+            setTimeout(() => ticking = false, 16); // ~60fps
+        }
+    }
+
+    window.addEventListener('scroll', requestTick);
+    updateScrollAnimations(); // Initial call
+}
+
+// Manual scroll function for arrows
+function scrollSection(section, direction) {
+    const currentPos = scrollPositions[section];
+    const newPos = Math.max(0, Math.min(maxScrollPositions[section], currentPos + direction));
+    
+    if (newPos !== currentPos) {
+        scrollPositions[section] = newPos;
+        updateManualScroll(section);
+        updateProgressDots(section);
+        updateArrowStates(section);
+    }
+}
+
+// Update manual scroll position
+function updateManualScroll(section) {
+    const content = document.getElementById(`${section}-content`);
+    const cardWidth = 360; // card width + margin
+    const translateX = -scrollPositions[section] * cardWidth;
+    
+    // Override the scroll-based animation temporarily
+    content.style.transition = 'transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+    content.style.transform = `translateX(${translateX}px)`;
+    
+    // Reset transition after animation
+    setTimeout(() => {
+        content.style.transition = 'transform 0.1s linear';
+    }, 500);
+}
+
+// Update progress dots
+function updateProgressDots(section) {
+    const progressContainer = document.getElementById(`${section}-progress`);
+    const dots = progressContainer.querySelectorAll('.progress-dot');
+    
+    dots.forEach((dot, index) => {
+        dot.classList.toggle('active', index === scrollPositions[section]);
+    });
+}
+
+// Update arrow states
+function updateArrowStates(section) {
+    const leftArrow = document.getElementById(`${section}-left`);
+    const rightArrow = document.getElementById(`${section}-right`);
+    
+    leftArrow.classList.toggle('disabled', scrollPositions[section] === 0);
+    rightArrow.classList.toggle('disabled', scrollPositions[section] === maxScrollPositions[section]);
+}
+
+// Initialize progress dots and arrows
+function initManualControls() {
+    ['managers', 'artists'].forEach(section => {
+        updateProgressDots(section);
+        updateArrowStates(section);
+    });
+}
+
+// Intersection Observer for performance optimization
+function initIntersectionObserver() {
+    const sections = document.querySelectorAll('.horizontal-section');
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('in-view');
+            }
+        });
+    }, {
+        threshold: 0.1,
+        rootMargin: '50px'
+    });
+
+    sections.forEach(section => observer.observe(section));
+}
+
+// Smooth scroll behavior
+function addSmoothScrollBehavior() {
+    document.documentElement.style.scrollBehavior = 'smooth';
+}
+
+// Initialize everything when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    initHorizontalScroll();
+    initIntersectionObserver();
+    addSmoothScrollBehavior();
+    initManualControls();
+
+    // Touch events for swipe
+    const managersContent = document.getElementById('managers-content');
+    const artistsContent = document.getElementById('artists-content');
+
+    managersContent.addEventListener('touchstart', (e) => handleTouchStart(e, 'managers'));
+    managersContent.addEventListener('touchend', (e) => handleTouchEnd(e, 'managers'));
+
+    artistsContent.addEventListener('touchstart', (e) => handleTouchStart(e, 'artists'));
+    artistsContent.addEventListener('touchend', (e) => handleTouchEnd(e, 'artists'));
+});
+
+// Handle resize for responsive behavior
+window.addEventListener('resize', () => {
+    setTimeout(() => {
+        const event = new Event('scroll');
+        window.dispatchEvent(event);
+        ['managers', 'artists'].forEach(section => {
+            updateManualScroll(section);
+        });
+    }, 100);
+});
+
+// Touch/swipe support for mobile
+let touchStartX = 0;
+let touchEndX = 0;
+let currentSection = null;
+
+function handleTouchStart(e, section) {
+    touchStartX = e.changedTouches[0].screenX;
+    currentSection = section;
+}
+
+function handleTouchEnd(e, section) {
+    touchEndX = e.changedTouches[0].screenX;
+    handleSwipe(section);
+}
+
+function handleSwipe(section) {
+    const swipeThreshold = 50;
+    const swipeDistance = touchStartX - touchEndX;
+    
+    if (Math.abs(swipeDistance) > swipeThreshold) {
+        if (swipeDistance > 0) {
+            // Swipe left - go to next
+            scrollSection(section, 1);
+        } else {
+            // Swipe right - go to previous
+            scrollSection(section, -1);
+        }
+    }
+}
+
+// EXPOSE FUNCTIONS TO GLOBAL SCOPE FOR INLINE ONCLICK
+window.openPopup = openPopup;
+window.closePopup = closePopup;
+window.toggleFullscreen = toggleFullscreen;
+window.scrollSection = scrollSection;
+
+</script>
+
+</body>
+</html>
