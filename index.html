@@ -40,6 +40,206 @@
 <!-- Preloder -->
 
 
+<style>
+      
+        /* Preloader Container */
+        .preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #030304 0%, #000000 100%);
+            z-index: 9999;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
+        }
+
+        .preloader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        /* Logo Container */
+        .logo-container {
+            position: relative;
+            width: 120px;
+            height: 120px;
+            margin-bottom: 30px;
+        }
+
+        /* Spinning Border */
+        .loader-ring {
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            width: 140px;
+            height: 140px;
+            border: 3px solid transparent;
+            border-top: 3px solid rgba(255, 255, 255, 0.8);
+            border-right: 3px solid rgba(255, 255, 255, 0.4);
+            border-radius: 50%;
+            animation: spin 2s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Logo Image */
+        .logo {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.05); opacity: 0.9; }
+        }
+
+        /* Loading Text */
+        .loading-text {
+            color: white;
+            font-size: 18px;
+            font-weight: 300;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            animation: fadeInOut 2s ease-in-out infinite;
+        }
+
+        @keyframes fadeInOut {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 1; }
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            width: 200px;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 1px;
+            margin-top: 20px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #fff, rgba(255, 255, 255, 0.7));
+            border-radius: 1px;
+            width: 0%;
+            animation: loading 3s ease-in-out infinite;
+        }
+
+        @keyframes loading {
+            0% { width: 0%; }
+            50% { width: 70%; }
+            100% { width: 100%; }
+        }
+
+        /* Main Content (Hidden initially) */
+        .main-content {
+            display: none;
+            padding: 50px;
+            text-align: center;
+            color: white;
+        }
+
+        .main-content.visible {
+            display: block;
+            animation: fadeIn 1s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 480px) {
+            .logo-container {
+                width: 80px;
+                height: 80px;
+            }
+            
+            .loader-ring {
+                width: 100px;
+                height: 100px;
+                top: -10px;
+                left: -10px;
+            }
+            
+            .loading-text {
+                font-size: 16px;
+            }
+            
+            .progress-container {
+                width: 150px;
+            }
+        }
+    </style>
+
+<div class="preloader" id="preloader">
+        <div class="logo-container">
+            <div class="loader-ring"></div>
+            <!-- Replace the src with your logo path -->
+            <img src="/images/logo.png" alt="Logo" class="logo" id="logoImage">
+        </div>
+        <div class="loading-text">Loading</div>
+        <div class="progress-container">
+            <div class="progress-bar"></div>
+        </div>
+    </div>
+
+
+   
+
+    <script>
+        // Preloader functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const preloader = document.getElementById('preloader');
+            const mainContent = document.getElementById('mainContent');
+            const logoImage = document.getElementById('logoImage');
+
+            // Handle logo load error
+            logoImage.addEventListener('error', function() {
+                // Fallback if logo fails to load
+                this.style.display = 'none';
+                this.parentElement.style.background = 'rgba(255, 255, 255, 0.2)';
+            });
+
+            // Simulate loading time (remove this in production)
+            setTimeout(() => {
+                hidePreloader();
+            }, 3000);
+
+            // Function to hide preloader
+            function hidePreloader() {
+                preloader.classList.add('hidden');
+                setTimeout(() => {
+                    preloader.style.display = 'none';
+                    mainContent.classList.add('visible');
+                }, 800);
+            }
+
+            // Hide preloader when everything is loaded
+            window.addEventListener('load', function() {
+                // Add a minimum display time
+                setTimeout(() => {
+                    hidePreloader();
+                }, 1500);
+            });
+        });
+    </script>
+
 <!--  -->
 
 
@@ -55,7 +255,7 @@
     <p class="d-flex me-4 mb-0">
        
         
-       <h4  >We Welcome You</h4> 
+       <h4  >WELCOME TO OUR RHYTHM</h4> 
 
     </p>
 </div>
