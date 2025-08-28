@@ -23,6 +23,8 @@
 
     <link href="css/templatemo-festava-live.css" rel="stylesheet">
 
+    <link rel="stylesheet" href="styles.css">
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 
 
@@ -41,150 +43,7 @@
 
 
 <style>
-      
-        /* Preloader Container */
-        .preloader {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            background: linear-gradient(135deg, #030304 0%, #000000 100%);
-            z-index: 9999;
-            transition: opacity 0.8s ease, visibility 0.8s ease;
-        }
-
-        .preloader.hidden {
-            opacity: 0;
-            visibility: hidden;
-        }
-
-        /* Logo Container */
-        .logo-container {
-            position: relative;
-            width: 180px;
-            height: 180px;
-            margin-bottom: 30px;
-        }
-
-        /* Spinning Border */
-        .loader-ring {
-            position: absolute;
-            top: -10px;
-            left: -10px;
-            width: 200px;
-            height: 200px;
-            border: 3px solid transparent;
-            border-top: 3px solid rgba(255, 255, 255, 0.8);
-            border-right: 3px solid rgba(255, 255, 255, 0.4);
-            border-radius: 50%;
-            animation: spin 2s linear infinite;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        /* Logo Image */
-        .logo {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            animation: pulse 2s ease-in-out infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.05); opacity: 0.9; }
-        }
-
-        /* Loading Text */
-        .loading-text {
-            color: white;
-            font-size: 18px;
-            font-weight: 300;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            animation: fadeInOut 2s ease-in-out infinite;
-        }
-
-        @keyframes fadeInOut {
-            0%, 100% { opacity: 0.6; }
-            50% { opacity: 1; }
-        }
-
-        /* Progress Bar */
-        .progress-container {
-            width: 200px;
-            height: 2px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 1px;
-            margin-top: 20px;
-            overflow: hidden;
-        }
-
-        .progress-bar {
-            height: 100%;
-            background: linear-gradient(90deg, #fff, rgba(255, 255, 255, 0.7));
-            border-radius: 1px;
-            width: 0%;
-            animation: loading 3s ease-in-out infinite;
-        }
-
-        @keyframes loading {
-            0% { width: 0%; }
-            50% { width: 70%; }
-            100% { width: 100%; }
-        }
-
-        /* Main Content (Hidden initially) */
-        .main-content {
-            display: none;
-            padding: 50px;
-            text-align: center;
-            color: white;
-        }
-
-        .main-content.visible {
-            display: block;
-            animation: fadeIn 1s ease-in;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Responsive Design */
-        @media (max-width: 480px) {
-            .logo-container {
-                width: 180px;
-                height: 180px;
-            }
-            
-            .loader-ring {
-                width: 200px;
-                height: 200px;
-                top: -10px;
-                left: -10px;
-            }
-            
-            .loading-text {
-                font-size: 16px;
-            }
-            
-            .progress-container {
-                width: 150px;
-            }
-        }
+    
     </style>
 
 <div class="preloader" id="preloader">
@@ -239,12 +98,6 @@
             });
         });
     </script>
-
-<!--  -->
-
-
-
-
     <main>
 
         <header class="site-header">
@@ -265,20 +118,7 @@
             </div>
         </header>
 <style>
-    @keyframes slideInFromRight {
-    0% {
-        transform: translateX(100%);
-        opacity: 0;
-    }
-    100% {
-        transform: translateX(0);
-        opacity: 1;
-    }
-}
 
-.slide-in-right {
-    animation: slideInFromRight 1s ease-out forwards;
-}
 
 </style>
 
@@ -394,108 +234,7 @@
             </div>
 
 
-            <styl>
-
-                /* Responsive logo styling */
-
-
-.responsive-logo {
-  max-width: 100%;
-  height: auto;
-  width: 550px;
-  z-index: 2;
-  position: relative;
-
-}
-
-.responsive-logo:hover {
-  transform: scale(1.15) translateY(-10px);
-  filter: drop-shadow(0 0 30px rgba(255, 255, 255, 1));
-  cursor: pointer;
-}
-
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-  .responsive-logo {
-    width: 350px;
-  }
-}
-
-@media (max-width: 480px) {
-  .responsive-logo {
-    width: 250px;
-  }
-}
-
-@media (max-width: 360px) {
-  .responsive-logo {
-     max-width: 100%;
-  height: auto;
-  width: 550px;
-  z-index: 2;
-  position: relative;
-  }
-}
-@media (max-width: 320px) {
-  .responsive-logo {
-    width: 320px;        /* Smaller logo size */
-    margin-top: -90px;    /* Move logo higher */
-  }
-
- 
-}
-
-/* Social section */
-.social-section {
-  margin-top: 20px;
-  padding: 10px 0;
-  z-index: 2;
-  position: relative;
-}
-
-/* List styles */
-.social-list {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 12px;
-  padding: 0;
-  margin: 0;
-  list-style: none;
-}
-
-/* Icon styles */
-.social-icon-link {
-  color: #fff;
-  font-size: 1.6rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 15px;
-  height: 15px;
-  background-color: rgba(255, 255, 255, 0.15);
-  border-radius: 50%;
-  transition: 0.3s ease;
-  margin-right: 18px;
-}
-
-.social-icon-link:hover {
-  background-color: #fff;
-  color: #000;
-}
-
-/* Extra fix for mobile spacing */
-@media (max-width: 480px) {
-  .social-section {
-    padding-bottom: 10px;
-  }
-}
-
-
-
-
-            </style>
+        
         </section>
 
 
@@ -588,315 +327,7 @@ We are  <b>VAIKOM KAITHOLAS</b> — bound by music, powered by purpose.
             </div>
         </section>
 
-        <!-- Video Section -->
-<section>
 
-
-    <style>
-    .video-section-wrapper {
-      display: flex;
-      align-items: center;
-      position: relative;
-      width: 100%;
-      overflow: hidden;
-      background: #18181c;
-      padding: 28px 0;
-      box-sizing: border-box;
-    }
-    .video-section-container {
-      display: flex;
-      gap: 18px;
-      overflow-x: auto;
-      scroll-behavior: smooth;
-      padding: 0 54px;
-      width: 100%;
-      scrollbar-width: none;
-    }
-    .video-section-container::-webkit-scrollbar { display: none; }
-
-    .video-card {
-      min-width: 300px;
-      max-width: 300px;
-      background: #23232b;
-      border-radius: 14px;
-      cursor: pointer;
-      box-shadow: 0 4px 22px 0 rgba(20,20,20,0.12);
-      transition: transform 0.22s cubic-bezier(.4,2,.6,1), box-shadow 0.18s;
-      display: flex;
-      flex-direction: column;
-      align-items: stretch;
-      overflow: hidden;
-      position: relative;
-    }
-    .video-card:hover {
-      transform: scale(1.06) translateY(-6px);
-      box-shadow: 0 6px 32px 0 rgba(20,20,20,0.17);
-      z-index: 2;
-    }
-    .video-card video {
-      width: 100%;
-      height: 210px;
-      object-fit: cover;
-      background: #1a1a1a;
-      border: none;
-      outline: none;
-      pointer-events: none;
-      transition: filter 0.18s;
-    }
-    .video-card:hover video {
-      filter: brightness(1.14) saturate(1.1);
-    }
-    .video-title {
-      background: rgba(20,20,22,0.97);
-      color: #fff;
-      font-size: 1.07rem;
-      padding: 14px 12px 12px 12px;
-      text-align: center;
-      border-radius: 0 0 14px 14px;
-      flex: 1 1 auto;
-      letter-spacing: 0.01em;
-      min-height: 38px;
-    }
-    .arrow {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      background: linear-gradient(135deg,#252533 60%,#36365a 100%);
-      color: #fff;
-      border: none;
-      border-radius: 50%;
-      width: 40px;
-      height: 40px;
-      font-size: 1.45rem;
-      cursor: pointer;
-      z-index: 4;
-      opacity: 0.9;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.15);
-      transition: background 0.15s, box-shadow 0.15s, scale 0.12s;
-      user-select: none;
-    }
-    .arrow:hover {
-      background: linear-gradient(135deg,#3a3a5c 60%,#5959a6 100%);
-      box-shadow: 0 4px 16px rgba(0,0,0,0.22);
-      scale: 1.12;
-    }
-    .arrow.left { left: 7px; }
-    .arrow.right { right: 7px; }
-
-    /* Popup Styles */
-    .video-popup-backdrop {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100vw; height: 100vh;
-      background: rgba(20, 20, 30, 0.84);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 100;
-      animation: fadeIn 0.25s;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-    .video-popup {
-      background: #23232b;
-      padding: 18px 18px 14px 18px;
-      border-radius: 15px;
-      position: relative;
-      max-width: 96vw;
-      max-height: 92vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      box-shadow: 0 6px 40px 0 rgba(0,0,0,0.30);
-      animation: popupUp 0.2s;
-    }
-    @keyframes popupUp {
-      from { transform: scale(0.85) translateY(60px); opacity: 0; }
-      to { transform: scale(1) translateY(0); opacity: 1; }
-    }
-    .video-popup video {
-      max-width: 90vw;
-      max-height: 68vh;
-      border-radius: 11px;
-      background: #000;
-      outline: none;
-    }
-    .close-popup {
-      position: absolute;
-      top: 8px; right: 12px;
-      background: transparent;
-      border: none;
-      font-size: 2.1rem;
-      color: #fff;
-      cursor: pointer;
-      z-index: 3;
-      filter: drop-shadow(0 2px 6px #000a);
-      transition: color 0.12s;
-    }
-    .close-popup:hover { color: #ff5a5a; }
-
-    /* Responsive Styles */
-    @media (max-width: 900px) {
-      .video-card, .video-card video { min-width: 250px; max-width: 250px; height: 150px; }
-      .video-section-container { gap: 9px; padding: 0 36px; }
-      .arrow { width: 34px; height: 34px; font-size: 1.1rem; }
-      .video-title { font-size: 0.98rem; padding: 9px 6px 9px 6px; }
-    }
-    @media (max-width: 600px) {
-      .video-section-wrapper { padding: 14px 0; }
-      .video-section-container { gap: 6px; padding: 0 14px; }
-      .arrow { width: 28px; height: 28px; font-size: 1.0rem; }
-      .video-card, .video-card video { min-width: 180px; max-width: 180px; height: 110px; }
-      .video-title { font-size: 0.80rem; padding: 7px 3px 7px 3px; }
-    }
-  </style>
-
-     <div class="video-section-wrapper">
-    <button class="arrow left" id="leftArrow" aria-label="Scroll left">&lt;</button>
-    <div class="video-section-container" id="videoContainer">
-      <!-- Video cards with looping muted video covers -->
-      <div class="video-card" data-src="public/video/first.mp4">
-        <video src="public/video/first.mp4" muted autoplay loop playsinline preload="metadata"></video>
-        <!-- <div class="video-title">Big Buck Bunny</div> -->
-      </div>
-      <div class="video-card" data-src="public/video/kait.mp4">
-        <video src="public/video/kait.mp4" muted autoplay loop playsinline preload="metadata"></video>
-        <!-- <div class="video-title">Another Bunny</div> -->
-      </div>
-      <div class="video-card" data-src="public/video/kaitholas2.mp4">
-        <video src="public/video/kaitholas2.mp4" muted autoplay loop playsinline preload="metadata"></video>
-        <!-- <div class="video-title">More Bunny</div> -->
-      </div>
-      <div class="video-card" data-src="public/video/kaitholas3.mp4">
-        <video src="public/video/kaitholas3.mp4" muted autoplay loop playsinline preload="metadata"></video>
-        <!-- <div class="video-title">More Bunny</div> -->
-      </div>
-      <div class="video-card" data-src="public/video/kaitholas4.mp4">
-        <video src="public/video/kaitholas4.mp4" muted autoplay loop playsinline preload="metadata"></video>
-        <!-- <div class="video-title">More Bunny</div> -->
-      </div>
-      <div class="video-card" data-src="public/video/kaitholas5.mp4">
-        <video src="public/video/kaitholas5.mp4" muted autoplay loop playsinline preload="metadata"></video>
-        <!-- <div class="video-title">More Bunny</div> -->
-      </div>
-      <div class="video-card" data-src="public/video/kaitholas6.mp4">
-        <video src="public/video/kaitholas6.mp4" muted autoplay loop playsinline preload="metadata"></video>
-       
-      </div>
-      <div class="video-card" data-src="public/video/kaitholas7.mp4">
-        <video src="public/video/kaitholas7.mp4" muted autoplay loop playsinline preload="metadata"></video>
-        <!-- <div class="video-title">More Bunny</div> -->
-      </div>
-      <!-- Add/remove as many video-cards as you want -->
-    </div>
-    <button class="arrow right" id="rightArrow" aria-label="Scroll right">&gt;</button>
-  </div>
-  <!-- Pop-up Modal -->
-  <div class="video-popup-backdrop" id="videoPopupBackdrop" style="display: none;">
-    <div class="video-popup" id="videoPopup" onclick="event.stopPropagation()">
-      <button class="close-popup" id="closePopupBtn" aria-label="Close">&times;</button>
-      <video id="popupVideo" src="" controls autoplay playsinline style="background:#000;"></video>
-    </div>
-  </div>
-  <script>
-    // Auto-scroll functionality with pause on hover/focus
-    const videoContainer = document.getElementById('videoContainer');
-    let autoScrollInterval;
-    let isAutoScrolling = true;
-
-    function startAutoScroll() {
-      if (autoScrollInterval) return;
-      isAutoScrolling = true;
-      autoScrollInterval = setInterval(() => {
-        if (videoContainer) {
-          videoContainer.scrollLeft += 2;
-          if (
-            videoContainer.scrollLeft + videoContainer.offsetWidth >=
-            videoContainer.scrollWidth - 2 // -2 for rounding
-          ) {
-            // Animate to start
-            videoContainer.scrollTo({ left: 0, behavior: "smooth" });
-          }
-        }
-      }, 18);
-    }
-    function stopAutoScroll() {
-      clearInterval(autoScrollInterval);
-      autoScrollInterval = null;
-      isAutoScrolling = false;
-    }
-    videoContainer.addEventListener('mouseenter', stopAutoScroll);
-    videoContainer.addEventListener('mouseleave', startAutoScroll);
-    videoContainer.addEventListener('focusin', stopAutoScroll);
-    videoContainer.addEventListener('focusout', startAutoScroll);
-    // Touch support
-    videoContainer.addEventListener('touchstart', stopAutoScroll);
-    videoContainer.addEventListener('touchend', startAutoScroll);
-
-    // Start auto-scroll initially
-    startAutoScroll();
-
-    document.getElementById('leftArrow').addEventListener('click', () => {
-      videoContainer.scrollBy({left: -260, behavior: 'smooth'});
-      stopAutoScroll();
-    });
-
-    document.getElementById('rightArrow').addEventListener('click', () => {
-      videoContainer.scrollBy({left: 260, behavior: 'smooth'});
-      stopAutoScroll();
-    });
-
-    // Popup functionality
-    const popupBackdrop = document.getElementById('videoPopupBackdrop');
-    const popupVideo = document.getElementById('popupVideo');
-    const closePopupBtn = document.getElementById('closePopupBtn');
-
-    Array.from(document.getElementsByClassName('video-card')).forEach(card => {
-      card.addEventListener('click', function() {
-        const src = this.getAttribute('data-src');
-        // Set and play video in popup
-        popupVideo.src = src;
-        popupBackdrop.style.display = 'flex';
-        setTimeout(() => { popupVideo.play(); }, 80);
-        // Pause all inline video previews
-        document.querySelectorAll('.video-card video').forEach(v => v.pause());
-      });
-    });
-
-    closePopupBtn.addEventListener('click', closePopup);
-    popupBackdrop.addEventListener('click', closePopup);
-
-    function closePopup() {
-      popupBackdrop.style.display = 'none';
-      popupVideo.pause();
-      popupVideo.currentTime = 0;
-      popupVideo.src = '';
-      // Resume all inline video previews
-      document.querySelectorAll('.video-card video').forEach(v => { try{ v.play(); }catch(e){} });
-    }
-
-    // Keyboard ESC to close popup
-    window.addEventListener('keydown', e => {
-      if (popupBackdrop.style.display === 'flex' && (e.key === 'Escape' || e.keyCode === 27)) {
-        closePopup();
-      }
-    });
-
-    // Animate arrow on container scroll
-    videoContainer.addEventListener('scroll', function () {
-      document.getElementById('leftArrow').style.opacity = videoContainer.scrollLeft > 5 ? "1" : "0.4";
-      document.getElementById('rightArrow').style.opacity =
-        videoContainer.scrollLeft + videoContainer.offsetWidth < videoContainer.scrollWidth - 5 ? "1" : "0.4";
-    });
-    // Initial state
-    document.getElementById('leftArrow').style.opacity = "0.4";
-  </script>
-
-
-</section>
-                
 
 
 <!-- ------------------------------------------------------------------------------------------------>
@@ -905,6 +336,133 @@ We are  <b>VAIKOM KAITHOLAS</b> — bound by music, powered by purpose.
 
 <iframe src="artist.html" width="100%" height="600px" style="border: none;" scrolling="no"></iframe> 
 
+
+<!-- Video Section -->
+
+
+ <section class="kaitholas-video-section">
+  <div class="kaitholas-header-row">
+    <!-- <h2 class="kaitholas-title">Kaitholas Video Gallery</h2> -->
+    <!-- Removed the Add Video button -->
+  </div>
+  <div class="kaitholas-scroll-container" id="kaitholasScrollContainer">
+    <!-- Video cards injected by JS -->
+  </div>
+  <button class="kaitholas-arrow kaitholas-arrow-left" id="kaitholasLeftArrow" aria-label="Scroll Left">&#8678;</button>
+  <button class="kaitholas-arrow kaitholas-arrow-right" id="kaitholasRightArrow" aria-label="Scroll Right">&#8680;</button>
+  <!-- Popup -->
+  <div class="kaitholas-popup-bg" id="kaitholasPopupBg" style="display:none">
+    <div class="kaitholas-popup-content">
+      <button class="kaitholas-popup-close" id="kaitholasPopupClose" aria-label="Close">&times;</button>
+      <video class="kaitholas-popup-video" id="kaitholasPopupVideo" controls></video>
+      <div class="kaitholas-popup-caption" id="kaitholasPopupCaption"></div>
+    </div>
+  </div>
+</section>
+
+
+
+  <script>
+    // Kaitholas Video Gallery Logic (without add button)
+const initialVideos = [
+  { src: "public/video/kait.mp4", title: "Kaitholas 1" },
+  { src: "public/video/kaitholas3.mp4", title: "Kaitholas 2" },
+  { src: "public/video/kaitholas4.mp4", title: "Kaitholas 3" },
+  { src: "public/video/kaitholas5.mp4", title: "Kaitholas 4" },
+  { src: "public/video/kaitholas6.mp4", title: "Kaitholas 5" },
+  { src: "public/video/kaitholas7.mp4", title: "Kaitholas 6" },
+  
+];
+
+let kaitholasVideos = [...initialVideos];
+
+// DOM Elements
+const scrollContainer = document.getElementById('kaitholasScrollContainer');
+const leftArrow = document.getElementById('kaitholasLeftArrow');
+const rightArrow = document.getElementById('kaitholasRightArrow');
+const popupBg = document.getElementById('kaitholasPopupBg');
+const popupVideo = document.getElementById('kaitholasPopupVideo');
+const popupCaption = document.getElementById('kaitholasPopupCaption');
+const popupClose = document.getElementById('kaitholasPopupClose');
+
+// Render videos
+function renderVideos() {
+  scrollContainer.innerHTML = '';
+  kaitholasVideos.forEach((video, idx) => {
+    const card = document.createElement('div');
+    card.className = 'kaitholas-video-card';
+    card.setAttribute('tabindex', '0');
+    card.onclick = () => openPopup(idx);
+
+    const vid = document.createElement('video');
+    vid.className = 'kaitholas-thumb';
+    vid.src = video.src;
+    vid.muted = true;
+    vid.loop = true;
+    vid.preload = 'metadata';
+
+    vid.onmouseover = () => vid.play();
+    vid.onmouseout = () => vid.pause();
+
+    const cap = document.createElement('span');
+    cap.className = 'kaitholas-caption';
+    cap.textContent = video.title;
+
+    card.appendChild(vid);
+    card.appendChild(cap);
+    scrollContainer.appendChild(card);
+  });
+}
+
+// Scroll
+function handleScroll(direction) {
+  const scrollAmount = scrollContainer.offsetWidth * 0.65;
+  if (direction === 'right') {
+    scrollContainer.scrollBy({ left: scrollAmount, behavior: "smooth" });
+  } else {
+    scrollContainer.scrollBy({ left: -scrollAmount, behavior: "smooth" });
+  }
+}
+
+// Auto-move
+let autoMoveInterval = setInterval(() => handleScroll('right'), 3500);
+
+scrollContainer.addEventListener('mouseenter', () => clearInterval(autoMoveInterval));
+scrollContainer.addEventListener('mouseleave', () => {
+  autoMoveInterval = setInterval(() => handleScroll('right'), 3500);
+});
+
+// Arrows
+leftArrow.onclick = () => handleScroll('left');
+rightArrow.onclick = () => handleScroll('right');
+
+// Popup logic
+function openPopup(idx) {
+  popupVideo.src = kaitholasVideos[idx].src;
+  popupCaption.textContent = kaitholasVideos[idx].title;
+  popupBg.style.display = 'flex';
+  setTimeout(() => popupVideo.play(), 100);
+}
+function closePopup() {
+  popupBg.style.display = 'none';
+  popupVideo.pause();
+  popupVideo.src = '';
+}
+popupClose.onclick = closePopup;
+popupBg.onclick = (e) => {
+  if (e.target.className.includes('kaitholas-popup-bg')) closePopup();
+};
+document.addEventListener('keydown', (e) => {
+  if (popupBg.style.display === 'flex' && (e.key === 'Escape' || e.key === 'Esc')) closePopup();
+});
+
+// Initial render
+renderVideos();
+  </script>
+
+
+
+<!-- Video Section end -->
 
 
 
