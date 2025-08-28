@@ -439,7 +439,7 @@ rightArrow.onclick = () => handleScroll('right');
 // Popup logic
 function openPopup(idx) {
   popupVideo.src = kaitholasVideos[idx].src;
-  popupCaption.textContent = kaitholasVideos[idx].title;
+  
   popupBg.style.display = 'flex';
   setTimeout(() => popupVideo.play(), 100);
 }
