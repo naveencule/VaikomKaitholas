@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Video Section Carousel</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    .video-section-wrapper {
+      display: flex;
+      align-items: center;
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+      background: #18181c;
+      padding: 28px 0;
+      box-sizing: border-box;
+    }
+    .video-section-container {
+      display: flex;
+      gap: 18px;
+      overflow-x: auto;
+      scroll-behavior: smooth;
+      padding: 0 54px;
+      width: 100%;
+      scrollbar-width: none;
+    }
+    .video-section-container::-webkit-scrollbar { display: none; }
+
+    .video-card {
+      min-width: 260px;
+      max-width: 260px;
+      background: #23232b;
+      border-radius: 14px;
+      cursor: pointer;
+      box-shadow: 0 4px 22px 0 rgba(20,20,20,0.12);
+      transition: transform 0.22s cubic-bezier(.4,2,.6,1), box-shadow 0.18s;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      overflow: hidden;
+      position: relative;
+    }
+    .video-card:hover {
+      transform: scale(1.06) translateY(-6px);
+      box-shadow: 0 6px 32px 0 rgba(20,20,20,0.17);
+      z-index: 2;
+    }
+    .video-card video {
+      width: 100%;
+      height: 158px;
+      object-fit: cover;
+      background: #1a1a1a;
+      border: none;
+      outline: none;
+      pointer-events: none;
+      transition: filter 0.18s;
+    }
+    .video-card:hover video {
+      filter: brightness(1.14) saturate(1.1);
+    }
+    .video-title {
+      background: rgba(20,20,22,0.97);
+      color: #fff;
+      font-size: 1.07rem;
+      padding: 14px 12px 12px 12px;
+      text-align: center;
+      border-radius: 0 0 14px 14px;
+      flex: 1 1 auto;
+      letter-spacing: 0.01em;
+      min-height: 38px;
+    }
+    .arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: linear-gradient(135deg,#252533 60%,#36365a 100%);
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      font-size: 1.45rem;
+      cursor: pointer;
+      z-index: 4;
+      opacity: 0.9;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+      transition: background 0.15s, box-shadow 0.15s, scale 0.12s;
+      user-select: none;
+    }
+    .arrow:hover {
+      background: linear-gradient(135deg,#3a3a5c 60%,#5959a6 100%);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.22);
+      scale: 1.12;
+    }
+    .arrow.left { left: 7px; }
+    .arrow.right { right: 7px; }
+
+    /* Popup Styles */
+    .video-popup-backdrop {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      background: rgba(20, 20, 30, 0.84);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+      animation: fadeIn 0.25s;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    .video-popup {
+      background: #23232b;
+      padding: 18px 18px 14px 18px;
+      border-radius: 15px;
+      position: relative;
+      max-width: 96vw;
+      max-height: 92vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      box-shadow: 0 6px 40px 0 rgba(0,0,0,0.30);
+      animation: popupUp 0.2s;
+    }
+    @keyframes popupUp {
+      from { transform: scale(0.85) translateY(60px); opacity: 0; }
+      to { transform: scale(1) translateY(0); opacity: 1; }
+    }
+    .video-popup video {
+      max-width: 90vw;
+      max-height: 68vh;
+      border-radius: 11px;
+      background: #000;
+      outline: none;
+    }
+    .close-popup {
+      position: absolute;
+      top: 8px; right: 12px;
+      background: transparent;
+      border: none;
+      font-size: 2.1rem;
+      color: #fff;
+      cursor: pointer;
+      z-index: 3;
+      filter: drop-shadow(0 2px 6px #000a);
+      transition: color 0.12s;
+    }
+    .close-popup:hover { color: #ff5a5a; }
+
+    /* Responsive Styles */
+    @media (max-width: 900px) {
+      .video-card, .video-card video { min-width: 180px; max-width: 180px; height: 120px; }
+      .video-section-container { gap: 9px; padding: 0 36px; }
+      .arrow { width: 34px; height: 34px; font-size: 1.1rem; }
+      .video-title { font-size: 0.98rem; padding: 9px 6px 9px 6px; }
+    }
+    @media (max-width: 600px) {
+      .video-section-wrapper { padding: 14px 0; }
+      .video-section-container { gap: 6px; padding: 0 14px; }
+      .arrow { width: 28px; height: 28px; font-size: 1.0rem; }
+      .video-card, .video-card video { min-width: 120px; max-width: 120px; height: 70px; }
+      .video-title { font-size: 0.80rem; padding: 7px 3px 7px 3px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="video-section-wrapper">
+    <button class="arrow left" id="leftArrow" aria-label="Scroll left">&lt;</button>
+    <div class="video-section-container" id="videoContainer">
+      <!-- Video cards with looping muted video covers -->
+      <div class="video-card" data-src="public/video/first.mp4">
+        <video src="public/video/first.mp4" muted autoplay loop playsinline preload="metadata"></video>
+        <div class="video-title">Big Buck Bunny</div>
+      </div>
+      <div class="video-card" data-src="public/video/kait.mp4">
+        <video src="public/video/kait.mp4" muted autoplay loop playsinline preload="metadata"></video>
+        <div class="video-title">Another Bunny</div>
+      </div>
+      <div class="video-card" data-src="public/video/kaitholas2.mp4">
+        <video src="public/video/kaitholas2.mp4" muted autoplay loop playsinline preload="metadata"></video>
+        <div class="video-title">More Bunny</div>
+      </div>
+      <div class="video-card" data-src="public/video/kaitholas3.mp4">
+        <video src="public/video/kaitholas3.mp4" muted autoplay loop playsinline preload="metadata"></video>
+        <div class="video-title">More Bunny</div>
+      </div>
+      <div class="video-card" data-src="public/video/kaitholas4.mp4">
+        <video src="public/video/kaitholas4.mp4" muted autoplay loop playsinline preload="metadata"></video>
+        <div class="video-title">More Bunny</div>
+      </div>
+      <div class="video-card" data-src="public/video/kaitholas5.mp4">
+        <video src="public/video/kaitholas5.mp4" muted autoplay loop playsinline preload="metadata"></video>
+        <div class="video-title">More Bunny</div>
+      </div>
+      <div class="video-card" data-src="public/video/kaitholas6.mp4">
+        <video src="public/video/kaitholas6.mp4" muted autoplay loop playsinline preload="metadata"></video>
+        <div class="video-title">More Bunny</div>
+      </div>
+      <div class="video-card" data-src="public/video/kaitholas7.mp4">
+        <video src="public/video/kaitholas7.mp4" muted autoplay loop playsinline preload="metadata"></video>
+        <div class="video-title">More Bunny</div>
+      </div>
+      <!-- Add/remove as many video-cards as you want -->
+    </div>
+    <button class="arrow right" id="rightArrow" aria-label="Scroll right">&gt;</button>
+  </div>
+  <!-- Pop-up Modal -->
+  <div class="video-popup-backdrop" id="videoPopupBackdrop" style="display: none;">
+    <div class="video-popup" id="videoPopup" onclick="event.stopPropagation()">
+      <button class="close-popup" id="closePopupBtn" aria-label="Close">&times;</button>
+      <video id="popupVideo" src="" controls autoplay playsinline style="background:#000;"></video>
+    </div>
+  </div>
+  <script>
+    // Auto-scroll functionality with pause on hover/focus
+    const videoContainer = document.getElementById('videoContainer');
+    let autoScrollInterval;
+    let isAutoScrolling = true;
+
+    function startAutoScroll() {
+      if (autoScrollInterval) return;
+      isAutoScrolling = true;
+      autoScrollInterval = setInterval(() => {
+        if (videoContainer) {
+          videoContainer.scrollLeft += 1;
+          if (
+            videoContainer.scrollLeft + videoContainer.offsetWidth >=
+            videoContainer.scrollWidth - 2 // -2 for rounding
+          ) {
+            // Animate to start
+            videoContainer.scrollTo({ left: 0, behavior: "smooth" });
+          }
+        }
+      }, 18);
+    }
+    function stopAutoScroll() {
+      clearInterval(autoScrollInterval);
+      autoScrollInterval = null;
+      isAutoScrolling = false;
+    }
+    videoContainer.addEventListener('mouseenter', stopAutoScroll);
+    videoContainer.addEventListener('mouseleave', startAutoScroll);
+    videoContainer.addEventListener('focusin', stopAutoScroll);
+    videoContainer.addEventListener('focusout', startAutoScroll);
+    // Touch support
+    videoContainer.addEventListener('touchstart', stopAutoScroll);
+    videoContainer.addEventListener('touchend', startAutoScroll);
+
+    // Start auto-scroll initially
+    startAutoScroll();
+
+    document.getElementById('leftArrow').addEventListener('click', () => {
+      videoContainer.scrollBy({left: -260, behavior: 'smooth'});
+      stopAutoScroll();
+    });
+
+    document.getElementById('rightArrow').addEventListener('click', () => {
+      videoContainer.scrollBy({left: 260, behavior: 'smooth'});
+      stopAutoScroll();
+    });
+
+    // Popup functionality
+    const popupBackdrop = document.getElementById('videoPopupBackdrop');
+    const popupVideo = document.getElementById('popupVideo');
+    const closePopupBtn = document.getElementById('closePopupBtn');
+
+    Array.from(document.getElementsByClassName('video-card')).forEach(card => {
+      card.addEventListener('click', function() {
+        const src = this.getAttribute('data-src');
+        // Set and play video in popup
+        popupVideo.src = src;
+        popupBackdrop.style.display = 'flex';
+        setTimeout(() => { popupVideo.play(); }, 80);
+        // Pause all inline video previews
+        document.querySelectorAll('.video-card video').forEach(v => v.pause());
+      });
+    });
+
+    closePopupBtn.addEventListener('click', closePopup);
+    popupBackdrop.addEventListener('click', closePopup);
+
+    function closePopup() {
+      popupBackdrop.style.display = 'none';
+      popupVideo.pause();
+      popupVideo.currentTime = 0;
+      popupVideo.src = '';
+      // Resume all inline video previews
+      document.querySelectorAll('.video-card video').forEach(v => { try{ v.play(); }catch(e){} });
+    }
+
+    // Keyboard ESC to close popup
+    window.addEventListener('keydown', e => {
+      if (popupBackdrop.style.display === 'flex' && (e.key === 'Escape' || e.keyCode === 27)) {
+        closePopup();
+      }
+    });
+
+    // Animate arrow on container scroll
+    videoContainer.addEventListener('scroll', function () {
+      document.getElementById('leftArrow').style.opacity = videoContainer.scrollLeft > 5 ? "1" : "0.4";
+      document.getElementById('rightArrow').style.opacity =
+        videoContainer.scrollLeft + videoContainer.offsetWidth < videoContainer.scrollWidth - 5 ? "1" : "0.4";
+    });
+    // Initial state
+    document.getElementById('leftArrow').style.opacity = "0.4";
+  </script>
+</body>
+</html>
