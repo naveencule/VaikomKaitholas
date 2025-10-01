@@ -1820,15 +1820,112 @@ renderVideos();
             height: 22px;
         }
 
+
+        /* Tablet responsiveness (768px and below) */
+@media (max-width: 768px) {
+    .contact-review-widget {
+        right: 15px;
+        bottom: 25px;
+        gap: 12px;
+    }
+
+    .contact-icon-button {
+        width: 45px;
+        height: 45px;
+    }
+
+    .contact-icon-button svg {
+        width: 24px;
+        height: 24px;
+    }
+}
+
+/* Mobile responsiveness (480px and below) */
+@media (max-width: 480px) {
+    .contact-review-widget {
+        right: 12px;
+        bottom: 20px;
+        gap: 10px;
+    }
+
+    .contact-icon-button {
+        width: 50px;
+        height: 50px;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .contact-icon-button:hover {
+        transform: scale(1.05);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .contact-icon-button svg {
+        width: 26px;
+        height: 26px;
+    }
+}
+
+/* Small mobile devices (360px and below) */
+@media (max-width: 360px) {
+    .contact-review-widget {
+        right: 10px;
+        bottom: 15px;
+        gap: 8px;
+    }
+
+    .contact-icon-button {
+        width: 45px;
+        height: 45px;
+    }
+
+    .contact-icon-button svg {
+        width: 24px;
+        height: 24px;
+    }
+}
+
+/* Large screens (1200px and above) */
+@media (min-width: 1200px) {
+    .contact-review-widget {
+        right: 30px;
+        bottom: 40px;
+    }
+
+    .contact-icon-button {
+        width: 55px;
+        height: 55px;
+    }
+
+    .contact-icon-button svg {
+        width: 28px;
+        height: 28px;
+    }
+}
+
+/* Touch devices - Remove hover effects */
+@media (hover: none) and (pointer: coarse) {
+    .contact-icon-button:hover {
+        transform: none;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .contact-whatsapp-button:hover {
+        background: #25D366;
+    }
+
+    .contact-google-button:hover {
+        background: #ffffff;
+    }
+
+    /* Add active state for touch feedback */
+    .contact-icon-button:active {
+        transform: scale(0.95);
+    }
+}
+
        
     </style>
-    <!--  -->
-
-    <!--
-
-T e m p l a t e M o
-
--->
+   
 
     <!-- JAVASCRIPT FILES -->
     <script src="js/jquery.min.js"></script>
