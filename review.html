@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact Widget</title>
+    <title>Vaikom Kaitholas - Chat Widget Demo</title>
     <style>
         * {
             margin: 0;
@@ -12,254 +12,616 @@
         }
 
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f5f5 0%, #ffffff 100%);
+            color: #333;
+            min-height: 100vh;
             padding: 20px;
         }
 
-        /* Demo content */
-        .demo-content {
-            max-width: 800px;
+        .demo-container {
+            max-width: 900px;
             margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
         }
 
-        .demo-content h1 {
-            margin-bottom: 20px;
-            color: #333;
+        .demo-container h1 {
+            color: #000;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+            font-weight: 700;
         }
 
-        .demo-content p {
-            line-height: 1.6;
+        .demo-container p {
             color: #666;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
+            line-height: 1.6;
         }
 
-        /* Fixed contact widget */
-        .contact-widget-container {
+        .demo-section {
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 4px solid #000;
+        }
+
+        .demo-section h3 {
+            color: #000;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        /* Chatbot Widget Styles */
+        .chatbot-bubble {
             position: fixed;
-            right: 20px;
-            bottom: 25px;
-            z-index: 1000;
+            bottom: 30px;
+            right: 30px;
+            z-index: 9998;
         }
 
-        /* Main toggle button */
-        .contact-toggle-btn {
+        .chat-icon {
             width: 60px;
             height: 60px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #000 0%, #333 100%);
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
             transition: all 0.3s ease;
-            border: none;
+            font-size: 28px;
+            border: 2px solid #fff;
         }
 
-        .contact-toggle-btn:hover {
+        .chat-icon:hover {
             transform: scale(1.1);
-            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
         }
 
-        .contact-toggle-btn.active {
-            transform: rotate(45deg);
-        }
-
-        .contact-toggle-btn svg {
-            width: 28px;
-            height: 28px;
-            transition: transform 0.3s ease;
-        }
-
-        /* Dropdown menu */
-        .contact-dropdown {
+        .chat-label {
             position: absolute;
             bottom: 75px;
             right: 0;
+            background: #000;
+            color: #fff;
+            padding: 12px 18px;
+            border-radius: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            font-size: 14px;
+            font-weight: 600;
+            white-space: nowrap;
+            cursor: pointer;
+            animation: slideInUp 0.4s ease forwards;
+            opacity: 0;
+        }
+
+        .chat-label.show {
+            opacity: 1;
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .chat-window {
+            position: fixed;
+            bottom: 100px;
+            right: 30px;
+            width: 400px;
+            max-width: 95vw;
+            height: 600px;
+            max-height: 85vh;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 40px rgba(0, 0, 0, 0.2);
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            z-index: 9999;
+            transform: translateY(450px);
             opacity: 0;
-            visibility: hidden;
-            transform: translateY(20px);
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            pointer-events: none;
+            border: 1px solid #ddd;
         }
 
-        .contact-dropdown.active {
-            opacity: 1;
-            visibility: visible;
+        .chat-window.open {
             transform: translateY(0);
+            opacity: 1;
+            pointer-events: auto;
         }
 
-        /* Individual contact buttons */
-        .contact-option {
+        .chat-header {
+            background: #000;
+            color: #fff;
+            padding: 20px;
+            border-radius: 15px 15px 0 0;
             display: flex;
+            justify-content: space-between;
             align-items: center;
-            gap: 12px;
-            padding: 12px 18px;
-            background: white;
-            border-radius: 50px;
-            text-decoration: none;
-            color: #333;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
-            transition: all 0.3s ease;
-            white-space: nowrap;
-            min-width: 180px;
+            font-size: 18px;
+            font-weight: 700;
         }
 
-        .contact-option:hover {
-            transform: translateX(-5px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.25);
-        }
-
-        .contact-option-icon {
-            width: 40px;
-            height: 40px;
+        .chat-close {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: #fff;
+            width: 32px;
+            height: 32px;
             border-radius: 50%;
+            cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            flex-shrink: 0;
+            font-size: 20px;
+            transition: all 0.2s ease;
         }
 
-        .contact-option-text {
-            font-weight: 500;
-            font-size: 15px;
+        .chat-close:hover {
+            background: rgba(255, 255, 255, 0.4);
+            transform: rotate(90deg);
         }
 
-        /* Phone icon */
-        .phone-icon {
-            background: #34B7F1;
+        .chat-body {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            background: #fafafa;
         }
 
-        /* WhatsApp icon */
-        .whatsapp-icon {
-            background: #25D366;
+        .chat-message {
+            background: white;
+            padding: 14px 16px;
+            border-radius: 12px;
+            font-size: 14px;
+            line-height: 1.6;
+            color: #333;
+            animation: messageAppear 0.3s ease;
+            border-left: 3px solid #000;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
         }
 
-        /* Instagram icon */
-        .instagram-icon {
-            background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+        .chat-message.malayalam {
+            font-family: 'Noto Sans Malayalam', 'Manjari', sans-serif;
+            font-size: 14px;
         }
 
-        /* Google icon */
-        .google-icon {
-            background: #ffffff;
-            border: 2px solid #e0e0e0;
+        .message-label {
+            font-size: 11px;
+            font-weight: 700;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 5px;
         }
 
-        .contact-option-icon svg {
-            width: 22px;
-            height: 22px;
+        @keyframes messageAppear {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
-        /* Animation delay for staggered effect */
-        .contact-dropdown.active .contact-option:nth-child(1) {
-            transition-delay: 0.05s;
-        }
-        .contact-dropdown.active .contact-option:nth-child(2) {
-            transition-delay: 0.1s;
-        }
-        .contact-dropdown.active .contact-option:nth-child(3) {
-            transition-delay: 0.15s;
-        }
-        .contact-dropdown.active .contact-option:nth-child(4) {
-            transition-delay: 0.2s;
+        .chat-options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: auto;
+            padding-bottom: 10px;
         }
 
-        /* Responsive */
+        .chat-option {
+            background: #000;
+            color: white;
+            border: none;
+            padding: 14px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            text-align: left;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .chat-option:hover {
+            background: #333;
+            transform: translateX(5px);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .chat-option.contact-whatsapp {
+            background: linear-gradient(135deg, #25d366 0%, #20ba5c 100%);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 16px;
+        }
+
+        .chat-option.contact-whatsapp:hover {
+            background: linear-gradient(135deg, #20ba5c 0%, #1a8e4b 100%);
+            transform: translateX(5px);
+        }
+
+        .chat-option.contact-call {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 16px;
+        }
+
+        .chat-option.contact-call:hover {
+            background: linear-gradient(135deg, #ee5a52 0%, #d43f3f 100%);
+            transform: translateX(5px);
+        }
+
+        .chat-option:active {
+            transform: scale(0.98);
+        }
+
+        .chat-option a {
+            color: white;
+            text-decoration: none;
+            display: block;
+            width: 100%;
+        }
+
+        .contact-icon {
+            font-size: 18px;
+            margin-right: 10px;
+        }
+
+        .contact-info {
+            flex: 1;
+        }
+
+        .contact-number {
+            font-size: 13px;
+            opacity: 0.9;
+            margin-top: 2px;
+        }
+
+        /* Scrollbar styling */
+        .chat-body::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .chat-body::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        .chat-body::-webkit-scrollbar-thumb {
+            background: #999;
+            border-radius: 3px;
+        }
+
+        .chat-body::-webkit-scrollbar-thumb:hover {
+            background: #666;
+        }
+
+        /* Mobile Responsiveness */
         @media (max-width: 480px) {
-            .contact-widget-container {
-                right: 15px;
+            .chat-window {
+                width: 95vw;
+                height: 70vh;
+                bottom: 70px;
+                right: 2.5vw;
+            }
+
+            .chat-icon {
+                width: 55px;
+                height: 55px;
                 bottom: 20px;
+                right: 20px;
             }
 
-            .contact-option {
-                min-width: 160px;
-                padding: 10px 15px;
+            .chat-label {
+                font-size: 12px;
+                padding: 10px 14px;
+                bottom: 70px;
             }
 
-            .contact-option-icon {
-                width: 36px;
-                height: 36px;
+            .demo-container {
+                padding: 20px;
             }
 
-            .contact-option-text {
-                font-size: 14px;
+            .demo-container h1 {
+                font-size: 1.8em;
             }
+
+            .chat-body {
+                padding: 15px;
+            }
+
+            .chat-option {
+                font-size: 13px;
+                padding: 12px 14px;
+            }
+        }
+
+        .language-toggle {
+            background: #f0f0f0;
+            border: 1px solid #ddd;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 600;
+            color: #333;
+            transition: all 0.2s ease;
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        .language-toggle:hover {
+            background: #e0e0e0;
         }
     </style>
 </head>
 <body>
-    <!-- Demo Content -->
-    <div class="demo-content">
-        <h1>Your Website Content</h1>
-        <p>This is your main content area. Click the contact button in the bottom right to see the dropdown menu.</p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+    
+
+    <!-- Chatbot Widget -->
+    <div class="chatbot-bubble">
+        <div class="chat-label show">Let's chat! 🎸</div>
+        <div class="chat-icon">🎸</div>
     </div>
 
-    <!-- Fixed Contact Widget -->
-    <div class="contact-widget-container">
-        <!-- Dropdown Menu -->
-        <div class="contact-dropdown" id="contactDropdown">
-            <!-- Phone -->
-            <a href="tel:+916238012281" class="contact-option">
-                <div class="contact-option-icon phone-icon">
-                    <svg viewBox="0 0 24 24" fill="white">
-                        <path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56a.977.977 0 00-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99z"/>
-                    </svg>
-                </div>
-                <span class="contact-option-text">Call Us</span>
-            </a>
-
-            <!-- WhatsApp -->
-            <a href="https://wa.me/916238012281?text=Hello%20I%20would%20like%20to%20know%20more" 
-               class="contact-option" 
-               target="_blank">
-                <div class="contact-option-icon whatsapp-icon">
-                    <svg viewBox="0 0 24 24" fill="white">
-                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
-                    </svg>
-                </div>
-                <span class="contact-option-text">WhatsApp</span>
-            </a>
-
-            <!-- Instagram -->
-            <a href="https://www.instagram.com/YOUR_INSTAGRAM_USERNAME" 
-               class="contact-option" 
-               target="_blank">
-                <div class="contact-option-icon instagram-icon">
-                    <svg viewBox="0 0 24 24" fill="white">
-                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-                    </svg>
-                </div>
-                <span class="contact-option-text">Instagram</span>
-            </a>
-
-            <!-- Google Review -->
-            <a href="https://g.page/r/CR0xtLHs6g8pEBM/review" 
-               class="contact-option" 
-               target="_blank">
-                <div class="contact-option-icon google-icon">
-                    <svg viewBox="0 0 24 24">
-                        <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
-                        <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
-                        <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
-                        <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
-                    </svg>
-                </div>
-                <span class="contact-option-text">Review Us</span>
-            </a>
+    <div class="chat-window">
+        <div class="chat-header">
+            Vaikom Kaitholas
+            <button class="chat-close">✕</button>
         </div>
-
-        <!-- Main Toggle Button -->
-        <button class="contact-toggle-btn" id="contactToggle" aria-label="Open contact options">
-            <svg viewBox="0 0 24 24" fill="white">
-                <path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/>
-            </svg>
-        </button>
+        <div class="chat-body">
+            <div class="chat-message" id="greetingMessage">
+                Hello! Welcome to Vaikom Kaitholas. How can we help you?
+            </div>
+            <div class="chat-options" id="chatOptions"></div>
+        </div>
     </div>
 
-   
+    <script>
+        // ============================================
+        // CHATBOT STATE MANAGEMENT & INTERACTION LOGIC
+        // ============================================
+
+        // Define the chat flow structure as a state machine
+        const chatStates = {
+            root: {
+                message: "Hello! Welcome to Vaikom Kaitholas. How can we help you?",
+                options: [
+                    { label: "Band Enquiries", nextState: "bandEnquiries" },
+                    { label: "Available Dates / Booking", nextState: "booking" },
+                    { label: "What is Amaalavettu?", nextState: "amaalavettu" }
+                ]
+            },
+
+            // Band Enquiries flow
+            bandEnquiries: {
+                message: "We are a music collective powered by purpose. Our mission is to amplify the voice of nature through powerful performances.",
+                options: [
+                    { label: "More about us", nextState: "moreAboutUs" },
+                    { label: "Our music", nextState: "music" },
+                    { label: "Get in touch", nextState: "contact" },
+                    { label: "Back to menu", nextState: "root" }
+                ]
+            },
+
+            moreAboutUs: {
+                message: "We blend traditional and contemporary sounds to create music that moves people. Every performance is a statement against exploitation and injustice.",
+                options: [
+                    { label: "Get in touch", nextState: "contact" },
+                    { label: "Back to menu", nextState: "root" }
+                ]
+            },
+
+            music: {
+                message: "Listen to our tracks on Spotify, YouTube, and all major streaming platforms. Search for 'Vaikom Kaitholas' to discover our resistance anthem.",
+                options: [
+                    { label: "Get in touch", nextState: "contact" },
+                    { label: "Back to menu", nextState: "root" }
+                ]
+            },
+
+            // Booking flow
+            booking: {
+                message: "We perform at festivals, concerts, corporate events, and celebrations. Every performance carries our message of environmental consciousness and social justice.",
+                options: [
+                    { label: "Check availability", nextState: "checkAvailability" },
+                    { label: "Get in touch", nextState: "contact" },
+                    { label: "Back to menu", nextState: "root" }
+                ]
+            },
+
+            checkAvailability: {
+                message: "For detailed availability and booking inquiries, please reach out to us directly. We'd love to bring our music to your event!",
+                options: [
+                    { label: "Get in touch", nextState: "contact" },
+                    { label: "Back to menu", nextState: "root" }
+                ]
+            },
+
+            // Amaalavettu - Main flow
+            amaalavettu: {
+                message: "Amaalavettu is more than a name — it is our stance. Choose your language to learn more.",
+                options: [
+                    { label: "Read in English", nextState: "amaalavettuEnglish" },
+                    { label: "വായിക്കുക മലയാളത്തിൽ", nextState: "amaalavettuMalayalam" },
+                    { label: "Back to menu", nextState: "root" }
+                ]
+            },
+
+            amaalavettuEnglish: {
+                message: "Amaalavettu is our resistance against the exploitation of nature. As forests fall and rivers are filled, entire ecosystems vanish. We stand as the voice of nature and advocates for environmental justice. Through music infused with the scent of our soil, we amplify the resistance of this land. We are Vaikom Kaitholas — bound by music, powered by purpose.",
+                options: [
+                    { label: "More of our vision", nextState: "visionEnglish" },
+                    { label: "Get in touch", nextState: "contact" },
+                    { label: "Back to menu", nextState: "root" }
+                ]
+            },
+
+            visionEnglish: {
+                message: "We resist exploitation of nature, injustice, blind beliefs, addiction, caste discrimination, and apathy in politics. Through our songs, we become the voice of the voiceless, bringing light to future generations. Join us in this movement for change.",
+                options: [
+                    { label: "Get in touch", nextState: "contact" },
+                    { label: "Back to menu", nextState: "root" }
+                ]
+            },
+
+            amaalavettuMalayalam: {
+                message: "അമാളവെട്ടു പ്രകൃതിയുടെ ചൂഷണത്തിനെതിരായ നമ്മുടെ പ്രതിരോധം ആണ്. കാടുകൾ നിരത്തപ്പെടുകയും നദികൾ നികത്തപ്പെടുകയും ചെയ്യുമ്പോൾ, മുഴുവൻ ആവാസവ്യവസ്ഥകളും അപ്രത്യക്ഷമാകുന്നു. നാം പ്രകൃതിയുടെ വാണിയും പരിസ്ഥിതി നീതിയുടെ പ്രവാചകനുമാണ്. നമ്മുടെ മണ്ണിന്റെ സുഗന്ധം വഹിക്കുന്ന സംഗീതത്തിലൂടെ, ഈ ഭൂമിയുടെ പ്രതിരോധത്തെ ഞങ്ങൾ ശക്തിപ്പെടുത്തുന്നു. ഞങ്ങൾ വൈകം കൈതോലസ് — സംഗീതത്താൽ ബന്ധപ്പെട്ട, ലക്ഷ്യത്താൽ ചാലിത.",
+                options: [
+                    { label: "നമ്മുടെ കാഴ്ചപ്പാട്", nextState: "visionMalayalam" },
+                    { label: "ഞങ്ങളെ ബന്ധപ്പെടുക", nextState: "contact" },
+                    { label: "മെനുവിലേക്ക് മടങ്ങുക", nextState: "root" }
+                ]
+            },
+
+            visionMalayalam: {
+                message: "ഞങ്ങൾ പ്രകൃതിയുടെ ചൂഷണം, അനീതി, അന്ധമായ വിശ്വാസങ്ങൾ, ലഹരി, വർണ്ണ വിവേചനം, രാഷ്ട്രീയ നിസ്സംഗതയ്ക്കെതിരെ പ്രതിരോധിക്കുന്നു. നമ്മുടെ പാട്ടുകളിലൂടെ, ഞങ്ങൾ നിരാലംബിതരുടെ കണ്ണിയും വരാനിരിക്കുന്ന തലമുറകളിലേക്ക് പ്രകാശം കൊണ്ടുവരുന്നു.",
+                options: [
+                    { label: "ഞങ്ങളെ ബന്ധപ്പെടുക", nextState: "contact" },
+                    { label: "മെനുവിലേക്ക് മടങ്ങുക", nextState: "root" }
+                ]
+            },
+
+            // Contact flow - FINAL STATE
+            contact: {
+                message: "We'd love to hear from you! Reach out to us through your preferred channel:",
+                options: [
+                    { label: "contact-whatsapp", action: "whatsapp", value: "+919876543210" },
+                    { label: "contact-call", action: "call", value: "+919876543210" },
+                    { label: "Back to menu", nextState: "root" }
+                ]
+            }
+        };
+
+        // DOM Elements
+        const chatBubble = document.querySelector('.chatbot-bubble');
+        const chatIcon = document.querySelector('.chat-icon');
+        const chatLabel = document.querySelector('.chat-label');
+        const chatWindow = document.querySelector('.chat-window');
+        const chatBody = document.querySelector('.chat-body');
+        const chatOptions = document.getElementById('chatOptions');
+        const closeButton = document.querySelector('.chat-close');
+        const greetingMessage = document.getElementById('greetingMessage');
+
+        let currentState = 'root';
+
+        /**
+         * Render the current chat state
+         * Updates the message and options based on currentState
+         */
+        function renderChatState() {
+            const state = chatStates[currentState];
+
+            if (!state) {
+                console.error(`State '${currentState}' not found`);
+                return;
+            }
+
+            // Update greeting message
+            const isMalayalam = currentState.includes('Malayalam');
+            greetingMessage.textContent = state.message;
+            if (isMalayalam) {
+                greetingMessage.classList.add('malayalam');
+            } else {
+                greetingMessage.classList.remove('malayalam');
+            }
+
+            // Clear existing options
+            chatOptions.innerHTML = '';
+
+            // Render each option as a button
+            state.options.forEach((option) => {
+                const button = document.createElement('button');
+                button.className = 'chat-option';
+
+                if (option.action === 'whatsapp') {
+                    button.classList.add('contact-whatsapp');
+                    button.innerHTML = `
+                        <a href="https://wa.me/${option.value.replace(/\+/g, '').replace(/\s/g, '')}?text=Hi%20Vaikom%20Kaitholas%2C%20I%27d%20like%20to%20know%20more%20about%20your%20services" style="display: flex; align-items: center; width: 100%;">
+                            <span class="contact-icon">💬</span>
+                            <span class="contact-info">
+                                <div>WhatsApp</div>
+                                <div class="contact-number">${option.value}</div>
+                            </span>
+                        </a>
+                    `;
+                } else if (option.action === 'call') {
+                    button.classList.add('contact-call');
+                    button.innerHTML = `
+                        <a href="tel:${option.value}" style="display: flex; align-items: center; width: 100%;">
+                            <span class="contact-icon">📞</span>
+                            <span class="contact-info">
+                                <div>Call Us</div>
+                                <div class="contact-number">${option.value}</div>
+                            </span>
+                        </a>
+                    `;
+                } else {
+                    button.textContent = option.label;
+                    button.addEventListener('click', () => {
+                        currentState = option.nextState;
+                        renderChatState();
+                        setTimeout(() => {
+                            chatBody.scrollTop = chatBody.scrollHeight;
+                        }, 100);
+                    });
+                }
+
+                chatOptions.appendChild(button);
+            });
+        }
+
+        /**
+         * Open the chat window
+         */
+        function openChat() {
+            chatWindow.classList.add('open');
+            chatLabel.classList.remove('show');
+            currentState = 'root';
+            renderChatState();
+        }
+
+        /**
+         * Close the chat window
+         */
+        function closeChat() {
+            chatWindow.classList.remove('open');
+            chatLabel.classList.add('show');
+        }
+
+        // ============================================
+        // EVENT LISTENERS
+        // ============================================
+
+        chatIcon.addEventListener('click', openChat);
+        chatLabel.addEventListener('click', openChat);
+        closeButton.addEventListener('click', closeChat);
+
+        // Initialize chat on page load
+        renderChatState();
+    </script>
 </body>
 </html>
