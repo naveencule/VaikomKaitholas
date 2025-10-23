@@ -2011,63 +2011,25 @@ renderVideos();
 </body>
 
 </html>
-<div class="black-cursor-dot"></div>
-
-<div class="black-cursor-ring"></div>
-
-<style>
-/* Hide the default cursor */
-body {
-    cursor: none; 
-}
-
-/* 1. The small, immediate dot */
-.black-cursor-dot {
-    position: fixed;
-    width: 6px;
-    height: 6px;
-    background: black; /* Solid black dot */
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 9999;
-    transform: translate(-50%, -50%);
-    transition: transform 0.1s ease-out; /* Quick transformation for click */
-}
-
-/* 2. The larger, lagging ring */
-.black-cursor-ring {
-    position: fixed;
-    width: 30px;
-    height: 30px;
-    border: 2px solid rgb(255, 255, 255); /* Black semi-transparent ring */
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 9998; /* Below the dot */
-    transform: translate(-50%, -50%);
-    transition: border-color 0.3s ease, width 0.3s ease, height 0.3s ease; /* For hover/click state change */
-}
-
-/* 3. Hover State: When over interactive elements */
-.black-cursor-ring.pointer {
-    width: 80px; /* Expands into a larger, elongated ring */
-    height: 60px;
-    border-radius: 40px; /* Oval shape for a dynamic feel */
-    border-color: rgba(0, 0, 0, 0.9);
-}
-
-/* 4. Click State: Both elements react */
-.black-cursor-dot.clicked {
-    transform: translate(-50%, -50%) scale(0.5); /* Dot shrinks */
-    background: #555;
-}
-
-.black-cursor-ring.clicked {
-    transform: translate(-50%, -50%) scale(0.9); /* Ring slightly squishes */
-}
-</style>
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
+    
+    // 1. **MOBILE CHECK:** Check if the device supports touch (indicates a mobile/tablet device)
+    // We use a safe check by seeing if 'ontouchstart' property exists in the document element.
+    const isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+
+    // **IMPORTANT:** If it's a touch device, we exit the script and rely on the native pointer.
+    if (isTouchDevice) {
+        // You might want to remove the 'cursor: none;' from the body here 
+        // if you placed the CSS directly in the <style> block of the HTML.
+        // For standard CSS files, this is not needed.
+        // document.body.style.cursor = 'default'; 
+        return; 
+    }
+
+    // --- Cursor logic below will only run on non-touch devices (Desktops/Laptops) ---
+
     const cursorDot = document.querySelector('.black-cursor-dot');
     const cursorRing = document.querySelector('.black-cursor-ring');
     
@@ -2081,15 +2043,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Ring follows with noticeable lag for visual effect
     const ringEasing = 0.15; 
-    // Dot follows more closely
-    const dotEasing = 0.3; 
-
+    
     // 1. Track Mouse Movement
     document.addEventListener('mousemove', (e) => {
         mouseX = e.clientX;
         mouseY = e.clientY;
 
-        // The dot follows the mouse with a quicker ease
+        // The dot follows the mouse with immediate position (less visual lag)
         cursorDot.style.left = mouseX + 'px';
         cursorDot.style.top = mouseY + 'px';
     });
@@ -2143,7 +2103,3 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 </script>
-
-
-
-    
