@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="KayalCove Resort Blog - Discover the Beauty of Alleppey's Backwaters">
+    <meta name="author" content="KayalCove Resort">
+    <!-- Favicon -->
+    <link rel="icon" href="assets/img/favicon.png">
+    <!-- All CSS Files -->
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/slick.min.css">
+    <link rel="stylesheet" href="assets/css/aos.min.css">
+    <link rel="stylesheet" href="assets/css/datepicker.css">
+    <link rel="stylesheet" href="assets/css/fontawesome.min.css">
+    <link rel="stylesheet" href="assets/css/lightgallery.min.css">
+    <link rel="stylesheet" href="assets/css/odometer.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <!-- Site Title -->
+    <title>Blog - KayalCove Resort | Discover Alleppey's Hidden Gems</title>
+    <style>
+      .blog-hero {
+        background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('assets/img/page-header-4.jpg');
+        background-size: cover;
+        background-position: center;
+        padding: 150px 0 100px;
+        text-align: center;
+        color: white;
+      }
+      .blog-hero h1 {
+        font-size: 3.5rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+      }
+      .blog-hero p {
+        font-size: 1.2rem;
+        opacity: 0.9;
+        max-width: 600px;
+        margin: 0 auto;
+      }
+      .featured-post {
+        background: linear-gradient(135deg, #49C4D4 0%, #2E8B9B 100%);
+        border-radius: 20px;
+        padding: 3rem;
+        color: white;
+        margin: 3rem 0;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+      }
+      .featured-post h2 {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+      }
+      .featured-post p {
+        font-size: 1.1rem;
+        line-height: 1.6;
+        opacity: 0.95;
+      }
+      .blog-card {
+        background: white;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        margin-bottom: 2rem;
+      }
+      .blog-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+      }
+      .blog-card img {
+        width: 100%;
+        height: 250px;
+        object-fit: cover;
+      }
+      .blog-card-content {
+        padding: 1.5rem;
+      }
+      .blog-category {
+        background: #49C4D4;
+        color: white;
+        padding: 0.3rem 0.8rem;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        display: inline-block;
+        margin-bottom: 1rem;
+      }
+      .blog-card h3 {
+        font-size: 1.4rem;
+        margin-bottom: 0.8rem;
+        color: #333;
+        line-height: 1.4;
+      }
+      .blog-card h3 a {
+        color: inherit;
+        text-decoration: none;
+        transition: color 0.3s ease;
+      }
+      .blog-card h3 a:hover {
+        color: #49C4D4;
+      }
+      .blog-meta {
+        display: flex;
+        align-items: center;
+        gap: 0.8rem;
+        font-size: 0.9rem;
+        color: #666;
+      }
+      .author-avatar {
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        object-fit: cover;
+      }
+      .categories-section {
+        background: #f8f9fa;
+        padding: 4rem 0;
+        text-align: center;
+      }
+      .category-tags {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1rem;
+        margin-top: 2rem;
+      }
+      .category-tag {
+        background: white;
+        color: #333;
+        padding: 0.8rem 1.5rem;
+        border-radius: 25px;
+        text-decoration: none;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+      }
+      .category-tag:hover {
+        background: #49C4D4;
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(73, 196, 212, 0.3);
+      }
+      .sidebar {
+        background: white;
+        border-radius: 15px;
+        padding: 2rem;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        position: sticky;
+        top: 2rem;
+      }
+      .sidebar h3 {
+        color: #49C4D4;
+        margin-bottom: 1.5rem;
+        font-size: 1.3rem;
+      }
+      .search-box {
+        position: relative;
+        margin-bottom: 2rem;
+      }
+      .search-box input {
+        width: 100%;
+        padding: 0.8rem 1rem 0.8rem 3rem;
+        border: 2px solid #e0e0e0;
+        border-radius: 25px;
+        outline: none;
+        transition: border-color 0.3s ease;
+      }
+      .search-box input:focus {
+        border-color: #49C4D4;
+      }
+      .search-box i {
+        position: absolute;
+        left: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #999;
+      }
+      .popular-post {
+        padding: 1rem 0;
+        border-bottom: 1px solid #eee;
+      }
+      .popular-post:last-child {
+        border-bottom: none;
+      }
+      .popular-post h4 {
+        font-size: 1rem;
+        margin-bottom: 0.5rem;
+        line-height: 1.4;
+      }
+      .popular-post h4 a {
+        color: #333;
+        text-decoration: none;
+      }
+      .popular-post h4 a:hover {
+        color: #49C4D4;
+      }
+      .post-date {
+        font-size: 0.85rem;
+        color: #666;
+      }
+      .newsletter-section {
+        background: linear-gradient(135deg, #49C4D4 0%, #2E8B9B 100%);
+        color: white;
+        padding: 4rem 0;
+        text-align: center;
+      }
+      .newsletter-form {
+        max-width: 500px;
+        margin: 2rem auto 0;
+        display: flex;
+        gap: 1rem;
+      }
+      .newsletter-form input {
+        flex: 1;
+        padding: 1rem;
+        border: none;
+        border-radius: 25px;
+        outline: none;
+      }
+      .newsletter-form button {
+        background: white;
+        color: #49C4D4;
+        border: none;
+        padding: 1rem 2rem;
+        border-radius: 25px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+      .newsletter-form button:hover {
+        background: #f0f0f0;
+        transform: translateY(-2px);
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Start Preloader -->
+    <div class="cs_preloader cs_center">
+      <div class="cs_preloader_in cs_center_column text-center">
+        <!-- Logo only -->
+        <img src="assets/image/logo.png" 
+             alt="KayalCove Logo" 
+             style="width:300px; height:auto; filter: brightness(1.3) contrast(1.2) saturate(1.3);">
+             
+        <!-- Loading text -->
+        <h3 class="cs_loading_text cs_fs_24 text-uppercase mb-0" style="color: #49C4D4; margin-top: 15px;">
+          Loading...
+        </h3>
+      </div>
+    </div>
+    <!-- End Preloader -->
+    
+    <!-- Start Header Section -->
+    <header class="cs_site_header cs_style_1 cs_type_2 cs_white_color cs_sticky_header">
+      <div class="cs_header_main position-relative">
+        <div class="container">
+          <div class="cs_main_header_in">
+            <div class="cs_main_header_left">
+              <a href="/" aria-label="Home page link" >
+              <img src="assets/image/logo.png" alt="Logo">
+              </a>
+            </div>
+            <div class="cs_main_header_center">
+              <div class="cs_nav">
+                <div class="cs_nav_list_wrap">
+                  <div class="cs_nav_links_wrap">
+                    <ul class="cs_nav_list cs_mp_0">
+                      <li><a href="index.html" aria-label="Nav link">Home</a></li>
+                      <li><a href="about-us.html" aria-label="Nav link">About</a></li>
+                      <li><a href="rooms.html" aria-label="Nav link">Rooms</a></li>
+                    </ul>
+                    <ul class="cs_nav_list cs_mp_0">
+                      <li><a href="gallery.html" aria-label="Nav link">Gallery</a></li>
+                      <li><a href="blog.html" aria-label="Nav link">Blog</a></li>
+                      <li><a href="contact-us.html" aria-label="Nav link">Contact</a></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+    <!-- End Header Section -->
+
+    <!-- Blog Hero Section -->
+    <section class="blog-hero">
+      <div class="container">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb justify-content-center">
+            <li class="breadcrumb-item"><a href="index.html" style="color: rgba(255,255,255,0.8);">Home</a></li>
+            <li class="breadcrumb-item active" style="color: white;">Blog</li>
+          </ol>
+        </nav>
+        <h1 data-aos="fade-up">Discover Alleppey</h1>
+        <p data-aos="fade-up" data-aos-delay="200">Explore the enchanting backwaters, rich culture, and hidden gems of God's Own Country through our curated stories and experiences.</p>
+      </div>
+    </section>
+
+    <!-- Featured Post Section -->
+    <section class="py-5">
+      <div class="container">
+        <div class="featured-post" data-aos="fade-up">
+          <div class="row align-items-center">
+            <div class="col-lg-8">
+              <h2>Backwater Bliss: A Journey Through Alleppey's Venetian Canals</h2>
+              <p>Discover the mesmerizing beauty of Alleppey's backwaters, where traditional houseboats glide through emerald canals lined with swaying coconut palms. Experience the tranquil rhythm of life in Kerala's most celebrated destination, where every sunset paints a masterpiece across the waters.</p>
+              <div class="blog-meta mt-3">
+                <img src="assets/img/avatar-2.jpg" alt="Author" class="author-avatar me-2">
+                <span class="text-white">By Ravi Menon • December 15, 2024</span>
+              </div>
+            </div>
+            <div class="col-lg-4 text-center">
+              <img src="assets/img/post-img-7.jpg" alt="Alleppey Backwaters" style="border-radius: 15px; width: 100%; max-width: 300px;">
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Categories Section -->
+    <section class="categories-section">
+      <div class="container">
+        <h2 data-aos="fade-up" style="font-size: 2.5rem; margin-bottom: 1rem; color: #333;">Explore Our Stories</h2>
+        <p data-aos="fade-up" data-aos-delay="100" style="color: #666; margin-bottom: 2rem;">Dive into the rich tapestry of Kerala's culture, cuisine, and natural wonders</p>
+        <div class="category-tags" data-aos="fade-up" data-aos-delay="200">
+          <a href="#" class="category-tag">Backwater Adventures</a>
+          <a href="#" class="category-tag">Kerala Cuisine</a>
+          <a href="#" class="category-tag">Cultural Heritage</a>
+          <a href="#" class="category-tag">Ayurveda & Wellness</a>
+          <a href="#" class="category-tag">Local Experiences</a>
+          <a href="#" class="category-tag">Photography</a>
+          <a href="#" class="category-tag">Travel Tips</a>
+          <a href="#" class="category-tag">Seasonal Guides</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Main Blog Content -->
+    <section class="py-5">
+      <div class="container">
+        <div class="row">
+          <!-- Main Content -->
+          <div class="col-lg-8">
+            <div class="row">
+              <div class="col-md-6">
+                <article class="blog-card" data-aos="fade-up">
+                  <img src="assets/img/post-img-9.jpg" alt="Kerala Houseboat">
+                  <div class="blog-card-content">
+                    <span class="blog-category">Backwater Adventures</span>
+                    <h3><a href="blog-details.html">Ultimate Guide to Houseboat Experiences in Alleppey</a></h3>
+                    <div class="blog-meta">
+                      <img src="assets/img/avatar-3.jpg" alt="Author" class="author-avatar">
+                      <span>Priya Nair • Nov 28, 2024</span>
+                    </div>
+                  </div>
+                </article>
+              </div>
+              
+              <div class="col-md-6">
+                <article class="blog-card" data-aos="fade-up" data-aos-delay="100">
+                  <img src="assets/img/post-img-10.jpg" alt="Kerala Spices">
+                  <div class="blog-card-content">
+                    <span class="blog-category">Kerala Cuisine</span>
+                    <h3><a href="blog-details.html">Spice Routes: A Culinary Journey Through Kuttanad</a></h3>
+                    <div class="blog-meta">
+                      <img src="assets/img/avatar-4.jpg" alt="Author" class="author-avatar">
+                      <span>Chef Suresh • Nov 25, 2024</span>
+                    </div>
+                  </div>
+                </article>
+              </div>
+              
+              <div class="col-md-6">
+                <article class="blog-card" data-aos="fade-up" data-aos-delay="200">
+                  <img src="assets/img/post-img-11.jpg" alt="Ayurveda Treatment">
+                  <div class="blog-card-content">
+                    <span class="blog-category">Ayurveda & Wellness</span>
+                    <h3><a href="blog-details.html">Rejuvenate Your Soul: Ayurvedic Treatments at KayalCove</a></h3>
+                    <div class="blog-meta">
+                      <img src="assets/img/avatar-8.jpg" alt="Author" class="author-avatar">
+                      <span>Dr. Lakshmi • Nov 22, 2024</span>
+                    </div>
+                  </div>
+                </article>
+              </div>
+              
+              <div class="col-md-6">
+                <article class="blog-card" data-aos="fade-up" data-aos-delay="300">
+                  <img src="assets/img/post-img-12.jpg" alt="Kathakali Performance">
+                  <div class="blog-card-content">
+                    <span class="blog-category">Cultural Heritage</span>
+                    <h3><a href="blog-details.html">Kathakali Nights: Experiencing Kerala's Classical Arts</a></h3>
+                    <div class="blog-meta">
+                      <img src="assets/img/avatar-9.jpg" alt="Author" class="author-avatar">
+                      <span>Arjun Kumar • Nov 20, 2024</span>
+                    </div>
+                  </div>
+                </article>
+              </div>
+              
+              <div class="col-md-6">
+                <article class="blog-card" data-aos="fade-up" data-aos-delay="100">
+                  <img src="assets/img/post-img-13.jpg" alt="Bird Watching">
+                  <div class="blog-card-content">
+                    <span class="blog-category">Local Experiences</span>
+                    <h3><a href="blog-details.html">Birdwatcher's Paradise: Kumarakom Bird Sanctuary</a></h3>
+                    <div class="blog-meta">
+                      <img src="assets/img/avatar-10.jpg" alt="Author" class="author-avatar">
+                      <span>Maya Varma • Nov 18, 2024</span>
+                    </div>
+                  </div>
+                </article>
+              </div>
+              
+              <div class="col-md-6">
+                <article class="blog-card" data-aos="fade-up" data-aos-delay="200">
+                  <img src="assets/img/post-img-14.jpg" alt="Sunset Photography">
+                  <div class="blog-card-content">
+                    <span class="blog-category">Photography</span>
+                    <h3><a href="blog-details.html">Capturing Magic: Best Photography Spots in Alleppey</a></h3>
+                    <div class="blog-meta">
+                      <img src="assets/img/avatar-2.jpg" alt="Author" class="author-avatar">
+                      <span>Vikram Shah • Nov 15, 2024</span>
+                    </div>
+                  </div>
+                </article>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Sidebar -->
+          <div class="col-lg-4">
+            <div class="sidebar" data-aos="fade-left">
+              <h3>Search Stories</h3>
+              <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Search articles, destinations...">
+              </div>
+              
+              <h3>Popular Articles</h3>
+              <div class="popular-posts">
+                <div class="popular-post">
+                  <h4><a href="#">Monsoon Magic: Best Time to Visit Alleppey</a></h4>
+                  <div class="post-date">December 10, 2024</div>
+                </div>
+                <div class="popular-post">
+                  <h4><a href="#">Traditional Toddy Shops: A Local's Guide</a></h4>
+                  <div class="post-date">December 8, 2024</div>
+                </div>
+                <div class="popular-post">
+                  <h4><a href="#">Coir Making: Ancient Crafts of Kerala</a></h4>
+                  <div class="post-date">December 5, 2024</div>
+                </div>
+                <div class="popular-post">
+                  <h4><a href="#">Snake Boat Races: Thrilling Water Sports</a></h4>
+                  <div class="post-date">December 2, 2024</div>
+                </div>
+              </div>
+              
+              <h3 style="margin-top: 2rem;">Follow Us</h3>
+              <div class="social-buttons" style="display: flex; gap: 0.5rem;">
+                <a href="#" style="background: #3b5998; color: white; padding: 0.8rem; border-radius: 50%; text-decoration: none;"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" style="background: #e1306c; color: white; padding: 0.8rem; border-radius: 50%; text-decoration: none;"><i class="fab fa-instagram"></i></a>
+                <a href="#" style="background: #bd081c; color: white; padding: 0.8rem; border-radius: 50%; text-decoration: none;"><i class="fab fa-pinterest"></i></a>
+                <a href="#" style="background: #0077b5; color: white; padding: 0.8rem; border-radius: 50%; text-decoration: none;"><i class="fab fa-linkedin"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="newsletter-section">
+      <div class="container">
+        <h2 data-aos="fade-up" style="font-size: 2.5rem; margin-bottom: 1rem;">Stay Updated</h2>
+        <p data-aos="fade-up" data-aos-delay="100" style="font-size: 1.1rem; opacity: 0.9;">Subscribe to our newsletter for the latest stories from Alleppey, exclusive offers, and insider tips for your Kerala adventure.</p>
+        <form class="newsletter-form" data-aos="fade-up" data-aos-delay="200">
+          <input type="email" placeholder="Enter your email address..." required>
+          <button type="submit">Subscribe</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer class="modern-footer">
+        <div class="footer-container">
+            <div class="footer-top">
+                <div class="footer-grid">
+                    <!-- Brand Section -->
+                    <div class="footer-brand">
+                        <div class="footer-logo">
+                            <img src="/assets/image/logo.png" alt="KayalCove Logo">
+                        </div>
+                        <p class="footer-description">
+                            Experience luxury and tranquility at KayalCove Residency. Nestled on the pristine shores of Alleppey's backwaters, we offer an unforgettable escape with world-class amenities and breathtaking water views.
+                        </p>
+                        <div class="contact-info">
+                            <div class="contact-item">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>Kummakonam, Alleppey, Kerala 688001</span>
+                            </div>
+                            <div class="contact-item">
+                                <i class="fas fa-phone"></i>
+                                <a href="tel:+91477226800">+91 477 226 800</a>
+                            </div>
+                            <div class="contact-item">
+                                <i class="fas fa-envelope"></i>
+                                <a href="mailto:info@kayalcove.com">info@kayalcove.com</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Links -->
+                    <div class="footer-section">
+                        <h3>Quick Links</h3>
+                        <ul class="footer-links">
+                            <li><a href="rooms.html">Our Rooms</a></li>
+                            <li><a href="about-us.html">About Us</a></li>
+                            <li><a href="gallery.html">Gallery</a></li>
+                            <li><a href="blog.html">Blog</a></li>
+                            <li><a href="contact-us.html">Contact</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Social & Newsletter -->
+                    <div class="social-section">
+                        <h3>Stay Connected</h3>
+                        <div class="social-buttons">
+                            <a href="#" class="social-btn" aria-label="Facebook">
+                                <i class="fab fa-facebook-f"></i>
+                            </a>
+                            <a href="#" class="social-btn" aria-label="Instagram">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                            <a href="#" class="social-btn" aria-label="Pinterest">
+                                <i class="fab fa-pinterest-p"></i>
+                            </a>
+                            <a href="#" class="social-btn" aria-label="LinkedIn">
+                                <i class="fab fa-linkedin-in"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <div class="footer-bottom-content">
+                    <div class="copyright">
+                        © <span id="current-year">2025</span> KayalCove Resort. All rights reserved.
+                    </div>
+                    <ul class="footer-bottom-links">
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms & Conditions</a></li>
+                        <li><a href="#">Sitemap</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Start Scroll Top Button -->
+    <button type="button" class="cs_scrollup" id="scrollToTopBtn">
+      <svg style="width: 100%; height: 100%;" viewBox="0 0 48 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M23.9999 33.0001C24.3835 33.0001 24.7675 32.8535 25.0604 32.5606L40.0604 17.5606C40.6465 16.9745 40.6465 16.0253 40.0604 15.4396C39.4743 14.8538 38.5252 14.8535 37.9394 15.4396L23.9999 29.3791L10.0604 15.4396C9.47428 14.8535 8.52515 14.8535 7.9394 15.4396C7.35365 16.0257 7.35328 16.9748 7.9394 17.5606L22.9394 32.5606C23.2323 32.8535 23.6163 33.0001 23.9999 33.0001Z" fill="currentColor"></path>
+      </svg>
+    </button>
+    <!-- End Scroll Top Button -->
+    
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/slick.min.js"></script>
+    <script src="assets/js/aos.min.js"></script>
+    <script src="assets/js/moment.min.js"></script>
+    <script src="assets/js/datepicker.min.js"></script>
+    <script src="assets/js/odometer.min.js"></script>
+    <script src="assets/js/lightgallery.min.js"></script>
+    <script src="assets/js/main.js"></script>
+    
+    <script>
+      // Set current year
+      document.getElementById('current-year').textContent = new Date().getFullYear();
+      
+      // Enhanced search functionality
+      document.querySelector('.search-box input').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          // Add search functionality here
+          console.log('Searching for:', this.value);
+        }
+      });
+    </script>
+  </body>
+</html>
